@@ -15,7 +15,34 @@ app.post('/sheets', function(req, res) {
   });
 });
 
-// GOOGLE SHEETS
+// Scrape Data & Write it to Speadsheet
+setInterval(function() {
+  getURLs(function(urls, row){
+    var cols = Object.keys(urls);
+    cols.forEach(function(col) {
+      if (col == 0) return;
+      var url = urls[col]
+      request(url, function(error, response, html) {
+        if (error) {
+          console.log('Error scraping url', error)
+        } else {
+          var re = /"membersrecruited":\s"(\d+)"/;
+          var match = re.exec(html.toString());
+          if (match.length > 0) {
+            var numMembers = match[1];
+            var charCode = 65 + parseInt(col); // ASCII 65 == 'A'
+            var columnString = String.fromCharCode(charCode);
+            var rowString = row.toString();
+            var cell = columnString + rowString;
+            setNumber(cell, numMembers)
+          }
+        }
+      });
+    });
+  });
+}, 100000);
+
+// GOOGLE SHEETS AUTH
 var google = require('googleapis');
 var sheets = google.sheets({version: 'v4'});
 var OAuth2 = google.auth.OAuth2;
@@ -25,8 +52,8 @@ var oauth2Client = new OAuth2(
   'https://derby-days.herokuapp.com/'
 );
 oauth2Client.setCredentials({
-  access_token: process.env.ACCESS_TOKEN_1,
-  refresh_token: process.env.REFRESH_TOKEN_1
+  access_token: process.env.ACCESS_TOKEN_2,
+  refresh_token: process.env.REFRESH_TOKEN_2
 });
 
 // Google Sheets API Calls
@@ -55,28 +82,70 @@ function getSheetData(callback) {
   });
 }
 
-oauth2Client.setCredentials({
-  access_token: process.env.ACCESS_TOKEN_2,
-  refresh_token: process.env.REFRESH_TOKEN_2
-});
-setTimeout(function() {
+function getURLs(callback) {
+  sheets.spreadsheets.values.get({
+    auth: oauth2Client,
+    spreadsheetId: '1N7Elo6rsgQsj0ptaSxjD-VvNnwPKhWfZk6CyU2rF-fk',
+    range: 'TeamData!A:G',
+  }, function(err, response) {
+    if (err) {
+      console.log('Error geting google sheet: ', err);
+    }
+    var rows = response.values;
+    if (rows.length == 0) {
+      console.log('Error: No rows were found in google sheet');
+    } else {
+      var todayRowKey = computeRowKey();
+      var urls = {};
+      var todayRow;
+      for (i = 0; i < rows.length; i++) {
+        var row = rows[i];
+        var header = row[0];
+        if (header == 'Team Page URL'){
+          for (col = 0; col < row.length; col++){
+            urls[col] = row[col];
+          }
+        } else if (header == todayRowKey) {
+          todayRow = i + 1;
+        }
+      }
+      callback(urls, todayRow)
+    }
+  });
+}
+
+function computeRowKey() {
+  var today = new Date();
+  var start = new Date('2017/03/20');
+  var end = new Date('2017/04/22');
+  var key = '';
+  if (today.getTime() < start.getTime()) {
+    key = '2017/03/20';
+  } else if (today.getTime() > end.getTime()) {
+    key = '2017/04/22';
+  } else {
+    key = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+  }
+  return key;
+};
+
+function setNumber(cell, number) {
   var request = {
-    spreadsheetId: '1oc-7gDPhlIE6s2kJ6yT7gcJHV7zeo20m-19biyBlfGA',
-    range: 'TeamData!B2:G2',
+    spreadsheetId: '1N7Elo6rsgQsj0ptaSxjD-VvNnwPKhWfZk6CyU2rF-fk',
+    range: 'TeamData!' + cell,
     valueInputOption: 'USER_ENTERED',
     resource: {
-      "values": [[6,5,4,3,2,1]]
+      "values": [[number]]
     },
     auth: oauth2Client
   };
   sheets.spreadsheets.values.update(request, function(err, response) {
     if (err) {
-      console.log(err);
-      return;
+      console.log('Error putting number in google sheet', err);
     }
-    console.log(JSON.stringify(response, null, 2));
+    return;
   });
-}, 3000);
+};
 
 // Listen
 app.listen(process.env.PORT || 8080);

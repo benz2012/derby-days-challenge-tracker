@@ -17,8 +17,6 @@ app.post('/sheets', function(req, res) {
 
 // GOOGLE SHEETS
 var google = require('googleapis');
-
-// Google Sheets Authentication/Variables
 var sheets = google.sheets({version: 'v4'});
 var OAuth2 = google.auth.OAuth2;
 var oauth2Client = new OAuth2(
@@ -31,7 +29,7 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN_1
 });
 
-// Google Sheets API Call
+// Google Sheets API Calls
 function getSheetData(callback) {
   sheets.spreadsheets.values.get({
     auth: oauth2Client,
@@ -56,6 +54,28 @@ function getSheetData(callback) {
     callback(payload)
   });
 }
+
+setTimeout(function() {
+  var request = {
+    spreadsheetId: '1oc-7gDPhlIE6s2kJ6yT7gcJHV7zeo20m-19biyBlfGA',
+    range: 'TeamData!B2:G2',
+    valueInputOption: 'USER_ENTERED',
+    resource: {
+      valueRange: {
+        "range": 'TeamData!B2:G2',
+        "values": [5,4,3,2,1],
+      }
+    },
+    auth: oauth2Client
+  };
+  sheets.spreadsheets.values.update(request, function(err, response) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    console.log(JSON.stringify(response, null, 2));
+  });
+}, 3000);
 
 // Listen
 app.listen(process.env.PORT || 8080);

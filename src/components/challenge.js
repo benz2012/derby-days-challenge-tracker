@@ -8,8 +8,9 @@ export default class Challenge extends React.Component {
     return(
       <div className='row'>
         <div className='col-lg-12'>
-          <h1>Challenge {number}</h1>
-          <hr />
+          <h1 style={{marginBottom: '5px'}}>Challenge {number}</h1>
+          <small style={{marginLeft: '2px'}}>Data updates every 15 minutes</small>
+          <hr style={{marginTop: '12px'}}/>
           <Api number={number} />
         </div>
       </div>

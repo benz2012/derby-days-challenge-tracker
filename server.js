@@ -1,4 +1,5 @@
 var express = require('express');
+var request = require('request');
 var bodyParser = require('body-parser');
 var app = express();
 
@@ -16,7 +17,7 @@ app.post('/sheets', function(req, res) {
 });
 
 // Scrape Data & Write it to Speadsheet
-setInterval(function() {
+setTimeout(function() {
   getURLs(function(urls, row){
     var cols = Object.keys(urls);
     cols.forEach(function(col) {
@@ -40,7 +41,7 @@ setInterval(function() {
       });
     });
   });
-}, 100000);
+}, 1000);
 
 // GOOGLE SHEETS AUTH
 var google = require('googleapis');

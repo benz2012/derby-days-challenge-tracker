@@ -55,16 +55,17 @@ function getSheetData(callback) {
   });
 }
 
+oauth2Client.setCredentials({
+  access_token: process.env.ACCESS_TOKEN_2,
+  refresh_token: process.env.REFRESH_TOKEN_2
+});
 setTimeout(function() {
   var request = {
     spreadsheetId: '1oc-7gDPhlIE6s2kJ6yT7gcJHV7zeo20m-19biyBlfGA',
     range: 'TeamData!B2:G2',
     valueInputOption: 'USER_ENTERED',
     resource: {
-      valueRange: {
-        "range": 'TeamData!B2:G2',
-        "values": [5,4,3,2,1],
-      }
+      "values": [[6,5,4,3,2,1]]
     },
     auth: oauth2Client
   };

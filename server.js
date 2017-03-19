@@ -17,7 +17,7 @@ app.post('/sheets', function(req, res) {
 });
 
 // Scrape Data & Write it to Speadsheet
-setTimeout(function() {
+setInterval(function() {
   getURLs(function(urls, row){
     var cols = Object.keys(urls);
     cols.forEach(function(col) {
@@ -41,7 +41,7 @@ setTimeout(function() {
       });
     });
   });
-}, 1000);
+}, 100000);
 
 // GOOGLE SHEETS AUTH
 var google = require('googleapis');

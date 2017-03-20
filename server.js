@@ -126,10 +126,17 @@ function computeRowKey() {
   } else if (today.getTime() > end.getTime()) {
     key = '2017/04/22';
   } else {
-    key = today.getFullYear() + '/' + (today.getMonth() + 1) + '/' + today.getDate();
+    key = today.getFullYear() + '/' + padDate(today.getMonth() + 1) + '/' + padDate(today.getDate());
   }
   return key;
 };
+
+function padDate(number) {
+  if (number < 10) {
+    number = '0' + number;
+  }
+  return number;
+}
 
 function setNumber(cell, number) {
   var request = {

@@ -97,6 +97,7 @@ function getURLs(callback) {
       console.log('Error: No rows were found in google sheet');
     } else {
       var todayRowKey = computeRowKey();
+      console.log(todayRowKey);
       var urls = {};
       var todayRow;
       for (i = 0; i < rows.length; i++) {

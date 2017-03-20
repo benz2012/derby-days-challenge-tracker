@@ -52,10 +52,16 @@ export default class Challenge1 extends React.Component {
     } else if (today.getTime() > end.getTime()) {
       members = data['2017/04/22']
     } else {
-      const key = `${today.getFullYear()}/${today.getMonth() + 1}/${today.getDate()}`
+      const key = `${today.getFullYear()}/${padDate(today.getMonth() + 1)}/${padDate(today.getDate())}`
       members = data[key]
     }
     return members
+  }
+  padDate(number) {
+    if (number < 10) {
+      number = '0' + number
+    }
+    return number
   }
   render() {
     const { teamElements } = this.state

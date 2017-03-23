@@ -19,7 +19,7 @@ export default class Jumbotron extends React.Component {
       height = 41
       vis = true
     }
-    const transition = 'visibility 250ms';
+    const transition = 'visibility 175ms, height 175ms linear';
     return {
       visibility: vis ? 'visible' : 'hidden',
       height: height + 'px',

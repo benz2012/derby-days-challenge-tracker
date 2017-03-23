@@ -24,17 +24,17 @@ export default class Challenge extends React.Component {
     return(
       <div className='row'>
         <div className='col-lg-12'>
-          <div style={{float: 'left'}}>
-            <h1 style={{marginBottom: '5px'}}>
+          <div>
+            <h1 style={{marginBottom: '0px'}}>
               Challenge {number}
             </h1>
-            <small style={{marginLeft: '5px', paddingTop: '10px'}}>
+            <small>
               <a href="#" onClick={this.changeVisible.bind(this)}>
                 {visibleLabel}
               </a>
             </small>
           </div>
-          <div style={{clear: 'both'}}>
+          <div>
             {visibleLabel === 'hide ▲' && <hr style={{clear: 'both', marginTop: '12px'}}/>}
             {visibleLabel === 'hide ▲' && <Api number={number} socket={socket}/>}
           </div>

@@ -1,6 +1,3 @@
-//var request = require('request');
-//var fs = require('fs');
-//var dataObj = JSON.parse(fs.readFileSync(__dirname + '/datastore.json', 'utf8'));
 
 module.exports = {
   entry: [

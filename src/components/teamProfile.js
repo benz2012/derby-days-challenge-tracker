@@ -32,7 +32,7 @@ export default class TeamProfile extends React.Component {
       color: team == 'Zeta Tau Alpha'? 'rgb(51, 51, 51)' : 'white',
       // backgroundColor: 'rgb(230,230,230)',
       backgroundColor: colors[0],
-      padding: '10px 5px 10px 5px',
+      padding: team == 'Sigma Sigma Sigma' ? '10px 0px' : '10px 5px',
     }
   }
   statisticStlye() {

@@ -14,11 +14,14 @@ export default class Jumbotron extends React.Component {
   }
   liveStyle(numWatching) {
     let height = 0
+    let vis = false
     if (numWatching > 1) {
       height = 41
+      vis = true
     }
-    const transition = "height 250ms";
+    const transition = 'visibility 0s, height 250ms linear';
     return {
+      visibility: vis ? 'visible' : 'hidden',
       height: height + 'px',
       WebkitTransition: transition,
       MozTransition: transition,

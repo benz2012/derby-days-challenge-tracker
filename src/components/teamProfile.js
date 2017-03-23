@@ -13,9 +13,9 @@ export default class TeamProfile extends React.Component {
     return colors[team]
   }
   profileStyle() {
-    const shadow = '1px 1px 4px rgba(0,0,0,0.3)'
+    const shadow = '1px 1px 8px rgba(0,0,0,0.25)'
     return {
-      border: '1px solid rgb(230,230,230)',
+      // border: '1px solid rgb(230,230,230)',
       textAlign: 'center',
       marginRight: '10px',
       marginBottom: '10px',

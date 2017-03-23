@@ -1,8 +1,5 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-// import io from 'socket.io-client'
-// import * as io from 'socket.io-client'
-// import io from '../../node_modules/socket.io/socket.io.js'
 const socket = io()
 
 import ChallengeChild from './challengeChild'
@@ -23,7 +20,6 @@ export default observer(class Api extends React.Component {
     const { number } = this.props
     return(
       <div>
-        <p className='text-info'>{statusLabel}</p>
         <div>
           <ChallengeChild
             number={number}

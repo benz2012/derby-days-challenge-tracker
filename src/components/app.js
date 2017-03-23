@@ -16,7 +16,7 @@ export default observer(class App extends React.Component {
   }
   render() {
     return(
-      <div className='container'>
+      <div className='container' style={{marginBottom: '30px'}}>
         <Jumbotron subTitle='Challenge Tracker 2017' socket={socket}>
           Derby Days
         </Jumbotron>

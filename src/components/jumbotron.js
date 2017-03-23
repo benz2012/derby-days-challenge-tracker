@@ -17,7 +17,7 @@ export default class Jumbotron extends React.Component {
     if (numWatching > 1) {
       height = 41
     }
-    const transition = "box-shadow 200ms";
+    const transition = "height 250ms";
     return {
       height: height + 'px',
       WebkitTransition: transition,

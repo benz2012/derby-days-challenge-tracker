@@ -8,8 +8,8 @@ export default class Challenge1 extends React.Component {
     Object.keys(teamObjs).forEach(teamKey => {
       const team = teamObjs[teamKey]
       const teamEl = <TeamProfile key={team.Team} name={team.Team} chapter={team.Chapter}
-        members={this.computeMembers(team)} current={team.CurrentTotal}
-        projected={team.ProjectedTotal} />
+        members={this.computeMembers(team)} current={this.computeCurrent(team)}
+        projected={this.computeProjected(team)} />
       teamElements.push(teamEl)
     })
     return teamElements
@@ -34,6 +34,26 @@ export default class Challenge1 extends React.Component {
       number = '0' + number
     }
     return number
+  }
+  computeCurrent(data) {
+    let currentTotal = 0
+    Object.keys(data).forEach(key => {
+      if (key.substring(0,4) == '2017') {
+        if (new Date(key) <= new Date()) {
+          currentTotal += data[key] * data.PledgePerMember
+        }
+      }
+    })
+    return currentTotal
+  }
+  computeProjected(data) {
+    let projectedTotal = 0
+    Object.keys(data).forEach(key => {
+      if (key.substring(0,4) == '2017') {
+        projectedTotal += data[key] * data.PledgePerMember
+      }
+    })
+    return projectedTotal
   }
   render() {
     const teamElements = this.mapTeams(this.props.data)

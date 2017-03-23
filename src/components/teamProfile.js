@@ -61,8 +61,8 @@ export default class TeamProfile extends React.Component {
 
           <div style={this.statisticStlye()}>
             <div>Members: {members}</div>
-            <div>Current: {current}</div>
-            <div>Projected: {projected}</div>
+            <div>Current: ${current}</div>
+            <div>Projected: ${projected}</div>
           </div>
 
           <div style={this.baseStyle()}>

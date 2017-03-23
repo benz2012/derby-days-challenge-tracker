@@ -24,8 +24,9 @@ export default class Jumbotron extends React.Component {
             <p>{subTitle}</p>
             <small>Updates Live, No Refreshing Needed</small><br />
             <small>
-              <span className="badge">{numWatching} </span>
-              People Watching Live
+              <span className="badge">
+                {numWatching} People Watching Live
+              </span>
             </small>
           </div>
         </div>

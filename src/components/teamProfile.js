@@ -90,7 +90,7 @@ export default class TeamProfile extends React.Component {
             <div>Projected: ${this.padCurrency(projected)}</div>
           </div>
 
-          <div style={this.baseStyle()}>
+          <div style={this.baseStyle(name)}>
             <h4 style={{margin: '0'}}>{name}</h4>
             <small>{chapter}</small>
           </div>

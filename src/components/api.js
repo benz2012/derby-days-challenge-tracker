@@ -12,9 +12,6 @@ export default observer(class Api extends React.Component {
       store[this.props.number.toString()] = data
       // console.log('data recieved: ', data)
     })
-    socket.on('number_watching', num => {
-      // console.log('number watching: ', num)
-    })
   }
   render() {
     const { number } = this.props

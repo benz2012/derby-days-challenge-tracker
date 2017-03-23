@@ -4,9 +4,9 @@ export default class TeamProfile extends React.Component {
   colors(team) {
     const colors = {
       'Sigma Chi': ['rgb(0, 157, 220)', 'rgb(255, 211, 80)'],
-      'Alpha Xi Delta': ['rgb(124, 188, 232)', 'rgb(28, 61, 128)'],
+      'Alpha Xi Delta': ['rgb(28, 61, 128)', 'rgb(124, 188, 232)'],
       'Alpha Sigma Alpha': ['#DC143C', 'rgb(255,255,255)'],
-      'Sigma Sigma Sigma': ['rgb(109,74,127)', 'rgb(255,255,255)'],
+      'Sigma Sigma Sigma': ['rgb(114,71,156)', 'rgb(255,255,255)'],
       'Zeta Tau Alpha': ['#40E0D0', 'rgb(150,150,150)'],
       'Delta Phi Epsilon': ['rgb(114,71,156)', 'rgb(255,215,0)'],
     }
@@ -25,10 +25,13 @@ export default class TeamProfile extends React.Component {
       boxShadow: shadow,
     }
   }
-  baseStyle() {
+  baseStyle(team) {
+    const colors = this.colors(team)
     return {
-      color: 'rgb(51, 51, 51)',
-      backgroundColor: 'rgb(230,230,230)',
+      // color: 'rgb(51, 51, 51)',
+      color: 'white',
+      // backgroundColor: 'rgb(230,230,230)',
+      backgroundColor: colors[0],
       padding: '10px 5px 10px 5px',
     }
   }

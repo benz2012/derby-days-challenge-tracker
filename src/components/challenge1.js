@@ -4,11 +4,14 @@ import TeamProfile from './teamProfile'
 
 export default class Challenge1 extends React.Component {
   mapTeams(teamObjs) {
-    const teamElements = teamObjs.map(team => (
-      <TeamProfile key={team.Team} name={team.Team} chapter={team.Chapter}
+    const teamElements = []
+    Object.keys(teamObjs).forEach(teamKey => {
+      const team = teamObjs[teamKey]
+      teamEl = <TeamProfile key={team.Team} name={team.Team} chapter={team.Chapter}
         members={this.computeMembers(team)} current={team.CurrentTotal}
         projected={team.ProjectedTotal} />
-    ))
+      teamElements.push(teamEl)
+    })
     return teamElements
   }
   computeMembers(data) {

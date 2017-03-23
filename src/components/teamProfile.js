@@ -53,13 +53,16 @@ export default class TeamProfile extends React.Component {
     const currencyStr = currency.toString()
     const sepIdx = currencyStr.indexOf('.')
     let tail = currencyStr.substring(sepIdx+1)
-    const head = currencyStr.substring(0, sepIdx)
+    let head = currencyStr.substring(0, sepIdx)
     if (tail.length > 2) {
       tail = tail.substring(0, 2)
     } else if (tail.length == 1) {
       tail = tail + '0'
     } else if (tail.length == 0) {
       tail = '00'
+    }
+    if (head.length = 0) {
+      head = '0'
     }
     return head + '.' + tail
   }

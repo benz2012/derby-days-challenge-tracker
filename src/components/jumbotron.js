@@ -4,7 +4,7 @@ export default class Jumbotron extends React.Component {
   constructor() {
     super()
     this.state = {
-      numWatching: 0
+      numWatching: 1
     }
   }
   componentDidMount() {

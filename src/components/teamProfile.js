@@ -61,7 +61,7 @@ export default class TeamProfile extends React.Component {
     } else if (tail.length == 0) {
       tail = '00'
     }
-    if (head.length = 0) {
+    if (head.length == 0) {
       head = '0'
     }
     return head + '.' + tail

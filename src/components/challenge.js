@@ -30,7 +30,9 @@ export default class Challenge extends React.Component {
               {visibleLabel}
             </a>
           </small>
-          {visibleLabel === 'hide ▲' && <hr style={{marginTop: '12px'}}/>}
+          {visibleLabel === 'hide ▲' &&
+            <hr style={{marginTop: '12px', clear: 'both'}}/>
+          }
           {visibleLabel === 'hide ▲' && <Api number={number} socket={socket}/>}
         </div>
       </div>

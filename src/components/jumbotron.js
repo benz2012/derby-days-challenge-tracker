@@ -3,6 +3,7 @@ const socket = io()
 
 export default class Jumbotron extends React.Component {
   constructor() {
+    super()
     this.state = {
       numWatching: 0
     }

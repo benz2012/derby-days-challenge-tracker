@@ -24,7 +24,7 @@ export default class Jumbotron extends React.Component {
             <small>Updates Live, No Refreshing Needed</small><br />
             <small>
               <span className="badge">
-                {numWatching} {numWatching > 1 > 'People' : 'Person'} Watching Live
+                {numWatching} {numWatching > 1 ? 'People' : 'Person'} Watching Live
               </span>
             </small>
           </div>

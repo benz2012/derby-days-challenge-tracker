@@ -9,7 +9,8 @@ export default class Challenge extends React.Component {
       visibleLabel: 'hide ▲'
     }
   }
-  changeVisible() {
+  changeVisible(e) {
+    e.preventDefault();
     const { visibleLabel } = this.state
     if (visibleLabel === 'hide ▲') {
       this.setState({visibleLabel: 'show ▼'})
@@ -24,7 +25,7 @@ export default class Challenge extends React.Component {
       <div className='row'>
         <div className='col-lg-12'>
           <h1 style={{marginBottom: '5px'}}>Challenge {number}</h1>
-          <small><a onClick={this.changeVisible().bind(this)}>{visibleLabel}</a></small>
+          <small><a href="#" onClick={this.changeVisible().bind(this)}>{visibleLabel}</a></small>
           <hr style={{marginTop: '12px'}}/>
           { visibleLabel === 'hide ▲' && <Api number={number} />}
         </div>

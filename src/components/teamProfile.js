@@ -29,7 +29,7 @@ export default class TeamProfile extends React.Component {
     const colors = this.colors(team)
     return {
       // color: 'rgb(51, 51, 51)',
-      color: 'white',
+      color: team == 'Zeta Tau Alpha'? colors[1] : 'white',
       // backgroundColor: 'rgb(230,230,230)',
       backgroundColor: colors[0],
       padding: '10px 5px 10px 5px',

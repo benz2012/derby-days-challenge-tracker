@@ -18,19 +18,16 @@ export default class Jumbotron extends React.Component {
     return(
       <div className='row'>
         <div className='col-lg-12'>
-          <div className='jumbotron'>
-            
+          <div className='jumbotron' style={{marginBottom: 0}}>
             <h1>{this.props.children}</h1>
             <p>{subTitle}</p>
-
-            <ul className="nav nav-pills nav-stacked">
-              <li>Updates Live, No Refreshing Needed</li>
-              <li className="active">
-                {numWatching} {numWatching > 1 ? 'People' : 'Person'} Watching Live
-              </li>
-            </ul>
-
+            <small>Updates Live, No Refreshing Needed</small>
           </div>
+          { numWatching > 1 &&
+            <ul className="nav nav-pills nav-stacked">
+              <li className="active"><a>{numWatching} People Watching Live</a></li>
+            </ul>
+          }
         </div>
       </div>
     )

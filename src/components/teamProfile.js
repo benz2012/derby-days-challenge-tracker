@@ -13,7 +13,7 @@ export default class TeamProfile extends React.Component {
     return colors[team]
   }
   profileStyle() {
-    const shadow = '1px 1px 8px rgba(0,0,0,0.25)'
+    const shadow = '0px 0px 8px rgba(0,0,0,0.25)'
     return {
       // border: '1px solid rgb(230,230,230)',
       textAlign: 'center',
@@ -79,10 +79,6 @@ export default class TeamProfile extends React.Component {
     return(
       <div className='col-lg-2 col-md-3 col-sm-4 col-xs-6' style={{padding: 0}}>
         <div style={this.profileStyle()}>
-
-          <div>
-            {this.palette(name)}
-          </div>
 
           <div style={this.statisticStlye()}>
             <div>Members: {members}</div>

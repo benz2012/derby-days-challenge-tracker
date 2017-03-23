@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/'));
 // Socket IO check for clients and send initial data object
 var clients = {};
 io.on('connection', function(socket) {
-  io.of('/watching').clients(function(err, clie) {
+  io.of('/watching').clients(function(err, clients) {
     if (err) throw err;
     console.log(clients);
   });

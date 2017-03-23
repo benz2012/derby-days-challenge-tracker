@@ -50,7 +50,7 @@ export default class TeamProfile extends React.Component {
     return palette
   }
   padCurrency(currency) {
-    const currencyStr.toString()
+    const currencyStr = currency.toString()
     const sepIdx = currencyStr.indexOf('.')
     let tail = currencyStr.substring(sepIdx+1)
     const head = currencyStr.substring(0, sepIdx)

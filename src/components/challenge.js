@@ -19,7 +19,7 @@ export default class Challenge extends React.Component {
     }
   }
   render() {
-    const { number } = this.props
+    const { number, socket } = this.props
     const { visibleLabel } = this.state
     return(
       <div className='row'>
@@ -27,7 +27,7 @@ export default class Challenge extends React.Component {
           <h1 style={{marginBottom: '5px'}}>Challenge {number}</h1>
           <small><a href="#" onClick={this.changeVisible.bind(this)}>{visibleLabel}</a></small>
           {visibleLabel === 'hide ▲' && <hr style={{marginTop: '12px'}}/>}
-          {visibleLabel === 'hide ▲' && <Api number={number} />}
+          {visibleLabel === 'hide ▲' && <Api number={number} socket={socket}/>}
         </div>
       </div>
     )

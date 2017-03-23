@@ -1,5 +1,4 @@
 import React from 'react'
-const socket = io()
 
 export default class Jumbotron extends React.Component {
   constructor() {
@@ -9,7 +8,7 @@ export default class Jumbotron extends React.Component {
     }
   }
   componentDidMount() {
-    socket.on('number_watching', num => {
+    this.props.socket.on('number_watching', num => {
       this.setState({numWatching: num})
     })
   }

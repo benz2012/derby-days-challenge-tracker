@@ -1,12 +1,12 @@
 import React from 'react'
 import { observer } from 'mobx-react'
-const socket = io()
 
 import ChallengeChild from './challengeChild'
 import store from '../store/dataStore'
 
 export default observer(class Api extends React.Component {
   componentDidMount() {
+    const { socket } = this.props
     socket.emit('ready')
     socket.on('update_data', data => {
       store[this.props.number.toString()] = data

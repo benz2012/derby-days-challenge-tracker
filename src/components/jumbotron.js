@@ -9,6 +9,7 @@ export default class Jumbotron extends React.Component {
           <div className='jumbotron'>
             <h1>{this.props.children}</h1>
             <p>{subTitle}</p>
+            <small>Updates Live, No Refreshing Needed</small>
           </div>
         </div>
       </div>

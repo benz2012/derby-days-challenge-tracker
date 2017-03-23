@@ -14,6 +14,7 @@ var clients = {};
 io.on('connection', function (socket) {
   clients[socket.id] = true;
   io.emit('number_watching', Object.keys(clients).length);
+  console.log(Object.keys(clients))
 
   socket.on('ready', function() {
     dataForClient(function(data) {

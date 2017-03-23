@@ -7,7 +7,7 @@ export default class Challenge1 extends React.Component {
     const teamElements = []
     Object.keys(teamObjs).forEach(teamKey => {
       const team = teamObjs[teamKey]
-      teamEl = <TeamProfile key={team.Team} name={team.Team} chapter={team.Chapter}
+      const teamEl = <TeamProfile key={team.Team} name={team.Team} chapter={team.Chapter}
         members={this.computeMembers(team)} current={team.CurrentTotal}
         projected={team.ProjectedTotal} />
       teamElements.push(teamEl)

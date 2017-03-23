@@ -1,7 +1,7 @@
 import { observable } from 'mobx'
 
 let store = observable({
-    1: {},
+    'MainData': {},
 })
 
 export default store

@@ -19,14 +19,14 @@ export default class Challenge extends React.Component {
     }
   }
   render() {
-    const { number, socket } = this.props
+    const { children, number, socket } = this.props
     const { visibleLabel } = this.state
     return(
       <div className='row'>
         <div className='col-lg-12'>
           <div>
             <h1 style={{marginBottom: '0px'}}>
-              Challenge {number}
+              {children}
             </h1>
             <small>
               <a href="#" onClick={this.changeVisible.bind(this)}>

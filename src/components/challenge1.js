@@ -9,7 +9,7 @@ export default class Challenge1 extends React.Component {
       const team = teamObjs[teamKey]
       const teamEl = <TeamProfile key={team.Team} name={team.Team} chapter={team.Chapter}
         members={this.computeMembers(team)} current={this.computeCurrent(team)}
-        projected={this.computeProjected(team)} />
+        number={1} projected={this.computeProjected(team)} />
       teamElements.push(teamEl)
     })
     return teamElements

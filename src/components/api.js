@@ -9,7 +9,7 @@ export default observer(class Api extends React.Component {
     const { socket } = this.props
     socket.emit('ready')
     socket.on('update_data', data => {
-      store[this.props.number.toString()] = data
+      store['MainData'] = data
       // console.log('data recieved: ', data)
     })
   }
@@ -20,7 +20,7 @@ export default observer(class Api extends React.Component {
         <div>
           <ChallengeChild
             number={number}
-            data={store[number.toString()]}
+            data={store['MainData']}
           />
         </div>
       </div>

@@ -75,15 +75,20 @@ export default class TeamProfile extends React.Component {
     return head + '.' + tail
   }
   render() {
-    const { name, chapter, members, current, projected } = this.props
+    const { name, chapter, number, raised,  members, current, projected } = this.props
     return(
       <div className='col-lg-2 col-md-3 col-sm-4 col-xs-6' style={{padding: 0}}>
         <div style={this.profileStyle()}>
 
           <div style={this.statisticStlye()}>
-            <div>Members: {members}</div>
-            <div>Current: ${this.padCurrency(current)}</div>
-            <div>Projected: ${this.padCurrency(projected)}</div>
+            { number == 1 &&
+              <div>Members: {members}</div>
+              <div>Current: ${this.padCurrency(current)}</div>
+              <div>Projected: ${this.padCurrency(projected)}</div>
+            }
+            { number == 0 &&
+              <div>Total Raised: {this.padCurrency(raised)}</div>
+            }
           </div>
 
           <div style={this.baseStyle(name)}>

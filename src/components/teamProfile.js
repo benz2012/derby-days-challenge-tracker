@@ -49,6 +49,20 @@ export default class TeamProfile extends React.Component {
     }
     return palette
   }
+  padCurrency(currency) {
+    const currencyStr.toString()
+    const sepIdx = currencyStr.indexOf('.')
+    let tail = currencyStr.substring(sepIdx+1)
+    const head = currencyStr.substring(0, sepIdx)
+    if (tail.length > 2) {
+      tail = tail.substring(0, 2)
+    } else if (tail.length == 1) {
+      tail = tail + '0'
+    } else if (tail.length == 0) {
+      tail = '00'
+    }
+    return head + '.' + tail
+  }
   render() {
     const { name, chapter, members, current, projected } = this.props
     return(
@@ -61,8 +75,8 @@ export default class TeamProfile extends React.Component {
 
           <div style={this.statisticStlye()}>
             <div>Members: {members}</div>
-            <div>Current: ${current}</div>
-            <div>Projected: ${projected}</div>
+            <div>Current: ${this.padCurrency(current)}</div>
+            <div>Projected: ${this.padCurrency(projected)}</div>
           </div>
 
           <div style={this.baseStyle()}>

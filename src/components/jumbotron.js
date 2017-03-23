@@ -19,7 +19,7 @@ export default class Jumbotron extends React.Component {
     }
     const transition = "box-shadow 200ms";
     return {
-      height: height + 'px'
+      height: height + 'px',
       WebkitTransition: transition,
       MozTransition: transition,
       msTransition: transition,

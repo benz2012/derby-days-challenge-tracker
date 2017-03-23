@@ -12,9 +12,24 @@ export default class Jumbotron extends React.Component {
       this.setState({numWatching: num})
     })
   }
+  liveStyle(numWatching) {
+    let height = 0
+    if (numWatching > 1) {
+      height = 41
+    }
+    const transition = "box-shadow 200ms";
+    return {
+      height: height + 'px'
+      WebkitTransition: transition,
+      MozTransition: transition,
+      msTransition: transition,
+      transition: transition,
+    }
+  }
   render() {
     const { subTitle } = this.props
     const { numWatching } = this.state
+    const liveStyle = this.liveStyle(numWatching)
     return(
       <div className='row'>
         <div className='col-lg-12'>
@@ -23,11 +38,11 @@ export default class Jumbotron extends React.Component {
             <p>{subTitle}</p>
             <small>Updates Live, No Refreshing Needed</small>
           </div>
-          { numWatching > 1 &&
+          <div style={liveStyle}>
             <ul className="nav nav-pills nav-stacked">
               <li className="active"><a>{numWatching} People Watching Live</a></li>
             </ul>
-          }
+          </div>
         </div>
       </div>
     )

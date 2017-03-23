@@ -1,5 +1,5 @@
 import React from 'react'
-const socket = io('/watching')
+const socket = io()
 
 import Challenge from './challenge'
 import Jumbotron from './jumbotron'

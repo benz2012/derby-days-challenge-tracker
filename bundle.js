@@ -7045,7 +7045,7 @@ var TeamProfile = function (_React$Component) {
         'Alpha Sigma Alpha': ['#DC143C', 'rgb(255,255,255)'],
         'Sigma Sigma Sigma': ['rgb(114,71,156)', 'rgb(255,255,255)'],
         'Zeta Tau Alpha': ['#40E0D0', 'rgb(150,150,150)'],
-        'Delta Phi Epsilon': ['rgb(114,71,156)', 'rgb(255,215,0)']
+        'Delta Phi Epsilon': ['rgb(255,214,74)', 'rgb(114,71,156)']
       };
       return colors[team];
     }
@@ -7068,9 +7068,10 @@ var TeamProfile = function (_React$Component) {
     key: 'baseStyle',
     value: function baseStyle(team) {
       var colors = this.colors(team);
+      var textColor = team == 'Zeta Tau Alpha' || team == 'Delta Phi Epsilon' ? 'rgb(51, 51, 51)' : 'white';
       return {
         // color: 'rgb(51, 51, 51)',
-        color: team == 'Zeta Tau Alpha' ? 'rgb(51, 51, 51)' : 'white',
+        color: textColor,
         // backgroundColor: 'rgb(230,230,230)',
         backgroundColor: colors[0],
         padding: team == 'Sigma Sigma Sigma' ? '10px 0px' : '10px 5px'

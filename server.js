@@ -158,7 +158,7 @@ oauth2Client.setCredentials({
   refresh_token: process.env.REFRESH_TOKEN_2
 });
 
-// Write backup data to Speadsheet every 3 hours
+// Write backup data to Speadsheet
 setInterval(function() {
   console.log('attempting to write backup data...');
   Object.keys(dataObj).forEach(function(team) {

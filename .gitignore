@@ -1,7 +1,6 @@
 .DS_STORE
 *.log
 env.js
-bundle.js
 
 design
 node_modules

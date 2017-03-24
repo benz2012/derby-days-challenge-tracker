@@ -15,7 +15,6 @@ export default class Jumbotron extends React.Component {
   render() {
     const { subTitle } = this.props
     const { numWatching } = this.state
-    const liveStyle = this.liveStyle(numWatching)
     return(
       <div className='row'>
         <div className='col-lg-12'>

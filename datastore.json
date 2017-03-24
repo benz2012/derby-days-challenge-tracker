@@ -35,7 +35,7 @@
     "2017/04/21":30,
     "2017/04/22":30,
     "Chapter":"Lambda Kappa",
-    "PledgePerMember":0.05,
+    "PledgePerMember":5,
     "Raised":0,
     "Team":"Sigma Chi",
     "TeamPageURL":"http://www.derbychallenge.org/faf/search/searchTeamPart.asp?ievent=1163823&lis=1&kntae1163823=EBC35F437A204C2EAE580BF4270E0989&team=6924047&tlteam=6781795"
@@ -76,7 +76,7 @@
     "2017/04/21":10,
     "2017/04/22":10,
     "Chapter":"Delta Lambda",
-    "PledgePerMember":0.05,
+    "PledgePerMember":5,
     "Raised":0,
     "Team":"Alpha Xi Delta",
     "TeamPageURL":"http://www.derbychallenge.org/faf/search/searchTeamPart.asp?ievent=1163823&lis=1&kntae1163823=EBC35F437A204C2EAE580BF4270E0989&team=6924053&tlteam=6781795"
@@ -117,7 +117,7 @@
     "2017/04/21":2,
     "2017/04/22":2,
     "Chapter":"Gamma Iota",
-    "PledgePerMember":0.05,
+    "PledgePerMember":5,
     "Raised":0,
     "Team":"Alpha Sigma Alpha",
     "TeamPageURL":"http://www.derbychallenge.org/faf/search/searchTeamPart.asp?ievent=1163823&lis=1&kntae1163823=DC157231491E45DEA4DCADD3FE2A1673&team=6931447&tlteam=6781795"
@@ -158,7 +158,7 @@
     "2017/04/21":2,
     "2017/04/22":2,
     "Chapter":"Beta Upsilon",
-    "PledgePerMember":0.05,
+    "PledgePerMember":5,
     "Raised":0,
     "Team":"Delta Phi Epsilon",
     "TeamPageURL":"http://www.derbychallenge.org/faf/search/searchTeamPart.asp?ievent=1163823&lis=1&kntae1163823=DCF959D6FA2243EC976DEACFFFAD283F&team=6931683&tlteam=6781795"
@@ -199,7 +199,7 @@
     "2017/04/21":3,
     "2017/04/22":3,
     "Chapter":"Iota Psi",
-    "PledgePerMember":0.05,
+    "PledgePerMember":5,
     "Raised":0,
     "Team":"Zeta Tau Alpha",
     "TeamPageURL":"http://www.derbychallenge.org/faf/search/searchTeamPart.asp?ievent=1163823&lis=1&kntae1163823=7120060833434432B6B43582265E0D65&team=6932026&tlteam=6781795"
@@ -240,7 +240,7 @@
     "2017/04/21":0,
     "2017/04/22":0,
     "Chapter":"Epsilon Psi",
-    "PledgePerMember":0.05,
+    "PledgePerMember":5,
     "Raised":0,
     "Team":"Sigma Sigma Sigma",
     "TeamPageURL":""

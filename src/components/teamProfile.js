@@ -57,6 +57,13 @@ export default class TeamProfile extends React.Component {
     }
     return palette
   }
+  centsToDollars(cents) {
+    const centsStr = cents.toString()
+    const len = centsStr.length
+    const centsRemainder = centsStr.substring(len-2, len)
+    const dollars = centsStr.substring(0, len-2)
+    return dollars + '.' + centsRemainder
+  }
   padCurrency(currency) {
     let head = '0'
     let tail = '00'
@@ -87,16 +94,20 @@ export default class TeamProfile extends React.Component {
         <div style={this.profileStyle()}>
 
           <div style={this.statisticStlye()}>
-            { number == 1 &&
-              <div>
-                <div>Members: {members}</div>
-                <div>Current: ${this.padCurrency(current)}</div>
-                <div>Projected: ${this.padCurrency(projected)}</div>
-              </div>
-            }
             { number == 0 &&
               <div>
                 <div>Total Raised: ${this.padCurrency(raised)}</div>
+              </div>
+            }
+            { number == 1 &&
+              <div>
+                <div>Members: {members}</div>
+                <div>Current: ${
+                  this.padCurrency(this.centsToDollars(current))
+                }</div>
+                <div>Projected: ${
+                  this.padCurrency(this.centsToDollars(projected))
+                }</div>
               </div>
             }
           </div>

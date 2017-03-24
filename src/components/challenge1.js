@@ -35,7 +35,7 @@ export default class Challenge1 extends React.Component {
     }
     return number
   }
-  computeCurrent(data) {
+  computeCurrentCents(data) {
     let currentTotal = 0
     Object.keys(data).forEach(key => {
       if (key.substring(0,4) == '2017') {
@@ -46,7 +46,7 @@ export default class Challenge1 extends React.Component {
     })
     return currentTotal
   }
-  computeProjected(data) {
+  computeProjectedCents(data) {
     let projectedTotal = 0
     Object.keys(data).forEach(key => {
       if (key.substring(0,4) == '2017') {

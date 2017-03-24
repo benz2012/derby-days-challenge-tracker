@@ -185,7 +185,7 @@ setInterval(function() {
     }
   });
   console.log('wrote backup data to google spreadsheet');
-}, 10800000); // ever 3 hours in miliseconds
+}, 1500000); // every 25 minutes in miliseconds
 
 function setNumber(cell, number) {
   var request = {
@@ -205,4 +205,6 @@ function setNumber(cell, number) {
   });
 };
 
-server.listen(process.env.PORT || 8080);
+server.listen(process.env.PORT || 8080, function() {
+  console.log('listening on port ' + this.address().port);
+});

@@ -1,4 +1,3 @@
-
 module.exports = {
   entry: [
     './src/index.js'
@@ -9,14 +8,18 @@ module.exports = {
     filename: 'bundle.js'
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: 'babel-loader',
-      query: {
-        presets: ['es2015', 'react']
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /(node_modules|bower_components)/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['env', 'es2015', 'react']
+          }
+        }
       }
-    }]
+    ]
   },
   resolve: {
     extensions: ['.js', '.jsx']

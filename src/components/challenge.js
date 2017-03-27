@@ -1,6 +1,7 @@
 import React from 'react'
 
-import Api from './api'
+// import Api from './api'
+import ChallengeChild from './challengeChild'
 
 export default class Challenge extends React.Component {
   constructor() {
@@ -24,6 +25,7 @@ export default class Challenge extends React.Component {
     return(
       <div className='row'>
         <div className='col-lg-12'>
+
           <div>
             <h1 style={{marginBottom: '0px'}}>
               {children}
@@ -34,10 +36,17 @@ export default class Challenge extends React.Component {
               </a>
             </small>
           </div>
+
           <div>
-            {visibleLabel === 'hide ▲' && <hr style={{clear: 'both', marginTop: '12px'}}/>}
-            {visibleLabel === 'hide ▲' && <Api number={number} data={data}/>}
+            {
+              visibleLabel === 'hide ▲' &&
+              <div>
+                <hr style={{clear: 'both', marginTop: '12px'}}/>
+                <ChallengeChild number={number} data={data}/>
+              </div>
+            }
           </div>
+          
         </div>
       </div>
     )

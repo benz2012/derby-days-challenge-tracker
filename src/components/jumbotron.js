@@ -26,7 +26,7 @@ export default class Jumbotron extends React.Component {
           <div>
             <ul className="nav nav-pills nav-stacked">
               <li className="active"><a>
-                {numWatching} {numWatching > 1 ? 'People' : 'Person'} Watching Live
+                {numWatching > 1 ? numWatching + ' People' : 'Only you are'} Watching Live
               </a></li>
             </ul>
           </div>

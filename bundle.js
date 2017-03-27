@@ -12903,71 +12903,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 (0, _reactDom.render)(_react2.default.createElement(_app2.default, null), document.getElementById('app'));
 
 /***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(12);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _challengeChild = __webpack_require__(94);
-
-var _challengeChild2 = _interopRequireDefault(_challengeChild);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Api = function (_React$Component) {
-  _inherits(Api, _React$Component);
-
-  function Api() {
-    _classCallCheck(this, Api);
-
-    return _possibleConstructorReturn(this, (Api.__proto__ || Object.getPrototypeOf(Api)).apply(this, arguments));
-  }
-
-  _createClass(Api, [{
-    key: 'render',
-    value: function render() {
-      var _props = this.props,
-          number = _props.number,
-          data = _props.data;
-
-      return _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_challengeChild2.default, {
-            number: number,
-            data: data
-          })
-        )
-      );
-    }
-  }]);
-
-  return Api;
-}(_react2.default.Component);
-
-exports.default = Api;
-
-/***/ }),
+/* 89 */,
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13071,9 +13007,9 @@ var _react = __webpack_require__(12);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _api = __webpack_require__(89);
+var _challengeChild = __webpack_require__(94);
 
-var _api2 = _interopRequireDefault(_api);
+var _challengeChild2 = _interopRequireDefault(_challengeChild);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13082,6 +13018,9 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+// import Api from './api'
+
 
 var Challenge = function (_React$Component) {
   _inherits(Challenge, _React$Component);
@@ -13145,8 +13084,12 @@ var Challenge = function (_React$Component) {
           _react2.default.createElement(
             'div',
             null,
-            visibleLabel === 'hide ▲' && _react2.default.createElement('hr', { style: { clear: 'both', marginTop: '12px' } }),
-            visibleLabel === 'hide ▲' && _react2.default.createElement(_api2.default, { number: number, data: data })
+            visibleLabel === 'hide ▲' && _react2.default.createElement(
+              'div',
+              null,
+              _react2.default.createElement('hr', { style: { clear: 'both', marginTop: '12px' } }),
+              _react2.default.createElement(_challengeChild2.default, { number: number, data: data })
+            )
           )
         )
       );
@@ -13179,6 +13122,8 @@ var _teamProfile = __webpack_require__(57);
 
 var _teamProfile2 = _interopRequireDefault(_teamProfile);
 
+var _sortOrder = __webpack_require__(196);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13198,20 +13143,62 @@ var Challenge0 = function (_React$Component) {
 
   _createClass(Challenge0, [{
     key: 'mapTeams',
-    value: function mapTeams(teamObjs) {
-      var teamElements = [];
-      Object.keys(teamObjs).forEach(function (teamKey) {
-        var team = teamObjs[teamKey];
-        var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.Team, name: team.Team,
-          number: 0, chapter: team.Chapter, raised: team.Raised });
-        teamElements.push(teamEl);
+    value: function mapTeams(data) {
+      var _this2 = this;
+
+      var teamList = [];
+      Object.keys(data.teams).forEach(function (teamKey) {
+        var team = data.teams[teamKey];
+        team.raised = data.raised[teamKey];
+        teamList.push(team);
+      });
+      teamList.sort(function (a, b) {
+        var order = (0, _sortOrder.sortOrder)();
+        var aLocation = order.indexOf(a.name);
+        var bLocation = order.indexOf(b.name);
+        return aLocation - bLocation;
+      });
+      var teamElements = teamList.map(function (team) {
+        var currentTotal = _this2.currentTotal(team.raised);
+        var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.name, name: team.name,
+          number: 0, chapter: team.chapter, raised: currentTotal });
+        return teamEl;
       });
       return teamElements;
     }
   }, {
+    key: 'currentTotal',
+    value: function currentTotal(raised) {
+      var today = new Date();
+      var todayKey = this.structureKey(today);
+      var currentTotal = 0;
+      Object.keys(raised).forEach(function (dateKey) {
+        if (dateKey === todayKey) {
+          currentTotal = raised[dateKey];
+        }
+      });
+      return currentTotal;
+    }
+  }, {
+    key: 'structureKey',
+    value: function structureKey(date) {
+      var key = date.getFullYear() + '-' + this.padDate(date.getMonth() + 1) + '-' + this.padDate(date.getDate());
+      return key;
+    }
+  }, {
+    key: 'padDate',
+    value: function padDate(number) {
+      if (number < 10) {
+        number = '0' + number;
+      }
+      return number;
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var teamElements = this.mapTeams(this.props.data);
+      var data = this.props.data;
+
+      var teamElements = Object.keys(data).length !== 0 ? this.mapTeams(this.props.data) : [];
       return _react2.default.createElement(
         'div',
         null,
@@ -13259,6 +13246,8 @@ var _teamProfile = __webpack_require__(57);
 
 var _teamProfile2 = _interopRequireDefault(_teamProfile);
 
+var _sortOrder = __webpack_require__(196);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -13278,16 +13267,27 @@ var Challenge1 = function (_React$Component) {
 
   _createClass(Challenge1, [{
     key: 'mapTeams',
-    value: function mapTeams(teamObjs) {
+    value: function mapTeams(data) {
       var _this2 = this;
 
-      var teamElements = [];
-      Object.keys(teamObjs).forEach(function (teamKey) {
-        var team = teamObjs[teamKey];
-        var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.Team, name: team.Team, chapter: team.Chapter,
-          members: _this2.computeMembers(team), current: _this2.computeCurrentCents(team),
-          number: 1, projected: _this2.computeProjectedCents(team) });
-        teamElements.push(teamEl);
+      var teamList = [];
+      Object.keys(data.teams).forEach(function (teamKey) {
+        var team = data.teams[teamKey];
+        team.members = data.members[teamKey];
+        teamList.push(team);
+      });
+      teamList.sort(function (a, b) {
+        var order = (0, _sortOrder.sortOrder)();
+        var aLocation = order.indexOf(a.name);
+        var bLocation = order.indexOf(b.name);
+        return aLocation - bLocation;
+      });
+      var teamElements = teamList.map(function (team) {
+        var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.name, name: team.name,
+          chapter: team.chapter, members: _this2.computeMembers(team.members),
+          current: _this2.computeCurrentCents(team.members), number: 1,
+          projected: _this2.computeProjectedCents(team.members) });
+        return teamEl;
       });
       return teamElements;
     }
@@ -13296,14 +13296,14 @@ var Challenge1 = function (_React$Component) {
     value: function computeMembers(data) {
       var members = 0;
       var today = new Date();
-      var start = new Date('2017/03/20');
-      var end = new Date('2017/04/22');
+      var start = new Date('2017-03-20');
+      var end = new Date('2017-04-22');
       if (today.getTime() < start.getTime()) {
-        members = data['2017/03/20'];
+        members = data['2017-03-20'];
       } else if (today.getTime() > end.getTime()) {
-        members = data['2017/04/22'];
+        members = data['2017-04-22'];
       } else {
-        var key = today.getFullYear() + '/' + this.padDate(today.getMonth() + 1) + '/' + this.padDate(today.getDate());
+        var key = today.getFullYear() + '-' + this.padDate(today.getMonth() + 1) + '-' + this.padDate(today.getDate());
         members = data[key];
       }
       return members;
@@ -13323,7 +13323,7 @@ var Challenge1 = function (_React$Component) {
       Object.keys(data).forEach(function (key) {
         if (key.substring(0, 4) == '2017') {
           if (new Date(key) <= new Date()) {
-            currentTotal += data[key] * data.PledgePerMember;
+            currentTotal += data[key] * data.pledge;
           }
         }
       });
@@ -13335,7 +13335,7 @@ var Challenge1 = function (_React$Component) {
       var projectedTotal = 0;
       Object.keys(data).forEach(function (key) {
         if (key.substring(0, 4) == '2017') {
-          projectedTotal += data[key] * data.PledgePerMember;
+          projectedTotal += data[key] * data.pledge;
         }
       });
       return projectedTotal;
@@ -13343,7 +13343,9 @@ var Challenge1 = function (_React$Component) {
   }, {
     key: 'render',
     value: function render() {
-      var teamElements = this.mapTeams(this.props.data);
+      var data = this.props.data;
+
+      var teamElements = Object.keys(data).length !== 0 ? this.mapTeams(data) : [];
       return _react2.default.createElement(
         'div',
         null,
@@ -13533,9 +13535,7 @@ var Jumbotron = function (_React$Component) {
                 _react2.default.createElement(
                   'a',
                   null,
-                  numWatching,
-                  ' ',
-                  numWatching > 1 ? 'People' : 'Person',
+                  numWatching > 1 ? numWatching + ' People' : 'Only you are',
                   ' Watching Live'
                 )
               )
@@ -26856,6 +26856,21 @@ module.exports = g;
 
 module.exports = __webpack_require__(88);
 
+
+/***/ }),
+/* 196 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.sortOrder = sortOrder;
+function sortOrder() {
+  return ['Sigma Chi', 'Alpha Xi Delta', 'Alpha Sigma Alpha', 'Delta Phi Epsilon', 'Zeta Tau Alpha', 'Sigma Sigma Sigma'];
+}
 
 /***/ })
 /******/ ]);

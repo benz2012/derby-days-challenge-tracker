@@ -7,17 +7,23 @@ import Challenge from './challenge'
 import Jumbotron from './jumbotron'
 
 export default observer(class App extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      clientVersion: "0102",
+    }
+  }
   componentDidMount() {
     socket.emit('ready')
     socket.on('update_data', data => {
       store['MainData'] = data
-      // console.log('data recieved: ', data)
     })
   }
   render() {
     return(
       <div className='container' style={{marginBottom: '30px'}}>
-        <Jumbotron subTitle='Challenge Tracker 2017' socket={socket}>
+        <Jumbotron subTitle='Challenge Tracker 2017'
+          socket={socket} version={this.state.clientVersion}>
           Derby Days
         </Jumbotron>
         <Challenge number='0' data={store['MainData']}>

@@ -27,7 +27,6 @@ export default class Jumbotron extends React.Component {
           <div className='jumbotron' style={{marginBottom: 0}}>
             <h1>{this.props.children}</h1>
             <p>{subTitle}</p>
-            <p>Total Raised by All Teams: </p>
             <small>Updates Live, No Refreshing Needed</small>
           </div>
           {

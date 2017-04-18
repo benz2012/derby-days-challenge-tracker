@@ -13611,11 +13611,6 @@ var Jumbotron = function (_React$Component) {
               subTitle
             ),
             _react2.default.createElement(
-              'p',
-              null,
-              'Total Raised by All Teams: '
-            ),
-            _react2.default.createElement(
               'small',
               null,
               'Updates Live, No Refreshing Needed'

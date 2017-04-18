@@ -7069,7 +7069,6 @@ var TeamProfile = function (_React$Component) {
     value: function profileStyle() {
       var shadow = '0px 0px 8px rgba(0,0,0,0.25)';
       return {
-        // border: '1px solid rgb(230,230,230)',
         textAlign: 'center',
         marginRight: '10px',
         marginBottom: '10px',
@@ -7083,13 +7082,17 @@ var TeamProfile = function (_React$Component) {
     key: 'baseStyle',
     value: function baseStyle(team) {
       var colors = this.colors(team);
-      var textColor = team == 'Zeta Tau Alpha' || team == 'Delta Phi Epsilon' ? 'rgb(51, 51, 51)' : 'white';
       return {
-        // color: 'rgb(51, 51, 51)',
-        color: textColor,
-        // backgroundColor: 'rgb(230,230,230)',
         backgroundColor: colors[0],
         padding: team == 'Sigma Sigma Sigma' ? '10px 0px' : '10px 5px'
+      };
+    }
+  }, {
+    key: 'linkStyle',
+    value: function linkStyle(team) {
+      var textColor = team == 'Zeta Tau Alpha' || team == 'Delta Phi Epsilon' ? 'rgb(51, 51, 51)' : 'white';
+      return {
+        color: textColor
       };
     }
   }, {
@@ -7162,7 +7165,8 @@ var TeamProfile = function (_React$Component) {
           raised = _props.raised,
           members = _props.members,
           current = _props.current,
-          projected = _props.projected;
+          projected = _props.projected,
+          url = _props.url;
 
       return _react2.default.createElement(
         'div',
@@ -7210,14 +7214,21 @@ var TeamProfile = function (_React$Component) {
             'div',
             { style: this.baseStyle(name) },
             _react2.default.createElement(
-              'h4',
-              { style: { margin: '0' } },
-              name
-            ),
-            _react2.default.createElement(
-              'small',
-              null,
-              chapter
+              'a',
+              { href: url, target: '_blank',
+                style: this.linkStyle(name) },
+              _react2.default.createElement(
+                'h4',
+                { style: { margin: '0' } },
+                name
+              ),
+              _react2.default.createElement(
+                'small',
+                null,
+                chapter,
+                '\xA0',
+                _react2.default.createElement('span', { className: 'glyphicon glyphicon-link', style: { fontSize: 9 } })
+              )
             )
           )
         )
@@ -12967,7 +12978,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: "0102"
+      clientVersion: "0103"
     };
     return _this;
   }
@@ -13180,7 +13191,8 @@ var Challenge0 = function (_React$Component) {
       var teamElements = teamList.map(function (team) {
         var currentTotal = _this2.currentTotal(team.raised);
         var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.name, name: team.name,
-          number: 0, chapter: team.chapter, raised: currentTotal });
+          number: 0, chapter: team.chapter, raised: currentTotal,
+          url: team.team_page_url });
         return teamEl;
       });
       return teamElements;
@@ -13213,11 +13225,53 @@ var Challenge0 = function (_React$Component) {
       return number;
     }
   }, {
+    key: 'allTeamTotal',
+    value: function allTeamTotal(data) {
+      var _this3 = this;
+
+      var total = 0;
+      Object.keys(data.teams).forEach(function (teamKey) {
+        var teamTotal = _this3.currentTotal(data.raised[teamKey]);
+        total += teamTotal;
+      });
+      return total;
+    }
+  }, {
+    key: 'padCurrency',
+    value: function padCurrency(currency) {
+      var head = '0';
+      var tail = '00';
+      var currencyStr = currency.toString();
+      if (currencyStr.indexOf('.') == -1) {
+        head = currencyStr;
+      } else {
+        var sepIdx = currencyStr.indexOf('.');
+        head = currencyStr.substring(0, sepIdx);
+        if (head == '') {
+          head = '0';
+        }
+        tail = currencyStr.substring(sepIdx + 1);
+        if (tail.length > 2) {
+          tail = tail.substring(0, 2);
+        } else if (tail.length == 1) {
+          tail = tail + '0';
+        } else if (tail.length == 0) {
+          tail = '00';
+        }
+      }
+      return head + '.' + tail;
+    }
+  }, {
     key: 'render',
     value: function render() {
       var data = this.props.data;
 
-      var teamElements = Object.keys(data).length !== 0 ? this.mapTeams(this.props.data) : [];
+      var teamElements = [];
+      var allTeamTotal = 0;
+      if (Object.keys(data).length !== 0) {
+        teamElements = this.mapTeams(this.props.data);
+        allTeamTotal = this.padCurrency(this.allTeamTotal(data));
+      }
       return _react2.default.createElement(
         'div',
         null,
@@ -13228,6 +13282,17 @@ var Challenge0 = function (_React$Component) {
             'p',
             null,
             'The Derby Challenge is a friendly competition amongst chapters raising funds for cancer research at Huntsman Cancer Institute.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Total Raised by All Teams: ',
+            _react2.default.createElement(
+              'span',
+              { className: 'text-success' },
+              '$',
+              allTeamTotal
+            )
           )
         ),
         _react2.default.createElement(
@@ -13305,7 +13370,8 @@ var Challenge1 = function (_React$Component) {
         var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.name, name: team.name,
           chapter: team.chapter, members: _this2.computeMembers(team.members),
           current: _this2.computeCurrentCents(team.members), number: 1,
-          projected: _this2.computeProjectedCents(team.members) });
+          projected: _this2.computeProjectedCents(team.members),
+          url: team.team_page_url });
         return teamEl;
       });
       return teamElements;
@@ -13543,6 +13609,11 @@ var Jumbotron = function (_React$Component) {
               'p',
               null,
               subTitle
+            ),
+            _react2.default.createElement(
+              'p',
+              null,
+              'Total Raised by All Teams: '
             ),
             _react2.default.createElement(
               'small',

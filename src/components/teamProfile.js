@@ -15,7 +15,6 @@ export default class TeamProfile extends React.Component {
   profileStyle() {
     const shadow = '0px 0px 8px rgba(0,0,0,0.25)'
     return {
-      // border: '1px solid rgb(230,230,230)',
       textAlign: 'center',
       marginRight: '10px',
       marginBottom: '10px',
@@ -27,6 +26,12 @@ export default class TeamProfile extends React.Component {
   }
   baseStyle(team) {
     const colors = this.colors(team)
+    return {
+      backgroundColor: colors[0],
+      padding: team == 'Sigma Sigma Sigma' ? '10px 0px' : '10px 5px',
+    }
+  }
+  linkStyle(team){
     const textColor = (
       team == 'Zeta Tau Alpha' ||
       team == 'Delta Phi Epsilon' ?
@@ -34,11 +39,7 @@ export default class TeamProfile extends React.Component {
       'white'
     )
     return {
-      // color: 'rgb(51, 51, 51)',
       color: textColor,
-      // backgroundColor: 'rgb(230,230,230)',
-      backgroundColor: colors[0],
-      padding: team == 'Sigma Sigma Sigma' ? '10px 0px' : '10px 5px',
     }
   }
   statisticStlye() {
@@ -94,7 +95,8 @@ export default class TeamProfile extends React.Component {
     return head + '.' + tail
   }
   render() {
-    const { name, chapter, number, raised,  members, current, projected } = this.props
+    const { name, chapter, number, raised, members, current,
+      projected, url } = this.props
     return(
       <div className='col-lg-2 col-md-3 col-sm-4 col-xs-6' style={{padding: 0}}>
         <div style={this.profileStyle()}>
@@ -119,8 +121,14 @@ export default class TeamProfile extends React.Component {
           </div>
 
           <div style={this.baseStyle(name)}>
-            <h4 style={{margin: '0'}}>{name}</h4>
-            <small>{chapter}</small>
+            <a href={url} target="_blank"
+              style={this.linkStyle(name)}>
+              <h4 style={{margin: '0'}}>{name}</h4>
+              <small>
+                {chapter}&nbsp;
+                <span className="glyphicon glyphicon-link" style={{fontSize: 9}}></span>
+              </small>
+            </a>
           </div>
 
         </div>

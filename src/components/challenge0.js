@@ -6,6 +6,7 @@ import { sortOrder } from './sortOrder'
 export default class Challenge0 extends React.Component {
   mapTeams(data) {
     const teamList = []
+    const largestTotal = this.largestTeamTotal(data)
     Object.keys(data.teams).forEach(teamKey => {
       let team = data.teams[teamKey]
       team.raised = data.raised[teamKey]
@@ -21,7 +22,8 @@ export default class Challenge0 extends React.Component {
       const currentTotal = this.currentTotal(team.raised)
       const teamEl = <TeamProfile key={team.name} name={team.name}
         number={0} chapter={team.chapter} raised={currentTotal}
-        url={team.team_page_url}/>
+        url={team.team_page_url} charts={this.props.charts}
+        raisedOverTime={team.raised} largest={largestTotal} />
       return teamEl
     })
     return teamElements
@@ -56,6 +58,16 @@ export default class Challenge0 extends React.Component {
       total += teamTotal
     })
     return total
+  }
+  largestTeamTotal(data) {
+    let largest = 0
+    Object.keys(data.teams).forEach(teamKey => {
+      const teamTotal = this.currentTotal(data.raised[teamKey])
+      if (teamTotal > largest) {
+        largest = teamTotal
+      }
+    })
+    return largest
   }
   padCurrency(currency) {
     let head = '0'

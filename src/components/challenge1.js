@@ -22,7 +22,7 @@ export default class Challenge1 extends React.Component {
         chapter={team.chapter} members={this.computeMembers(team.members)}
         current={this.computeCurrentCents(team.members)} number={1}
         projected={this.computeProjectedCents(team.members)}
-        url={team.team_page_url}/>
+        url={team.team_page_url} />
       return teamEl
     })
     return teamElements

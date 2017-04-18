@@ -1,6 +1,13 @@
 import React from 'react'
+import Chart from 'chart.js'
 
 export default class TeamProfile extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      chart: null
+    }
+  }
   colors(team) {
     const colors = {
       'Sigma Chi': ['rgb(0, 157, 220)', 'rgb(255, 211, 80)'],
@@ -94,20 +101,98 @@ export default class TeamProfile extends React.Component {
     }
     return head + '.' + tail
   }
+  chartStyle() {
+    return {
+      marginBottom: '0px',
+    }
+  }
+  buildChart() {
+    const { raisedOverTime, largest, name } = this.props
+    const chartContext = document.getElementById(name + 'chart')
+    const teamColor = this.colors(name)[0]
+    let chartData = []
+    let chartLabels = []
+    Object.keys(raisedOverTime).forEach(date => {
+      chartLabels.push(date)
+      chartData.push(raisedOverTime[date])
+    })
+    const yScale = largest < 100 ? 100 : Math.ceil(largest/100)*100
+    const step = (yScale/2)
+    const teamChart = new Chart(chartContext, {
+      type: 'line',
+      data: {
+        labels: chartLabels,
+        datasets: [{
+          data: chartData,
+          fill: false,
+          borderColor: teamColor,
+          pointBorderWidth: 0,
+          pointRadius: 0,
+          pointBackgroundColor: teamColor,
+          pointHoverRadius: 3, pointHitRadius: 3,
+          lineTension: 0,
+          borderJoinStyle: 'round',
+        }]
+      },
+      options: {
+        layout: {
+          padding: {
+            left: 10, right: 10, top: 20,
+          }
+        },
+        legend: {
+          display: false,
+        },
+        scales: {
+          yAxes: [{
+            ticks: {
+              max: yScale,
+              min: 0,
+              stepSize: step
+            }
+          }],
+          xAxes: [{
+            display: false,
+          }]
+        }
+      }
+    })
+  this.setState({chart: teamChart})
+  }
+  componentDidMount() {
+    if (this.props.charts === 'hide charts ▲') {
+      this.buildChart()
+    }
+  }
+  componentDidUpdate(prevProps) {
+    if (prevProps.charts === 'show charts ▼' && this.props.charts === 'hide charts ▲') {
+      this.buildChart()
+    }
+  }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.charts === 'hide charts ▲' && nextProps.charts === 'show charts ▼') {
+      this.state.chart.destroy()
+    }
+  }
   render() {
     const { name, chapter, number, raised, members, current,
-      projected, url } = this.props
+      projected, url, charts } = this.props
     return(
       <div className='col-lg-2 col-md-3 col-sm-4 col-xs-6' style={{padding: 0}}>
         <div style={this.profileStyle()}>
 
+          { number === 0 && charts === 'hide charts ▲' &&
+            <canvas id={name + 'chart'} height='170'
+              style={this.chartStyle()}></canvas>
+          }
+
           <div style={this.statisticStlye()}>
-            { number == 0 &&
+            { number === 0 &&
               <div>
                 <div>Total Raised: ${this.padCurrency(raised)}</div>
               </div>
             }
-            { number == 1 &&
+            { number === 1 &&
               <div>
                 <div>Members: {members}</div>
                 <div>Current: ${

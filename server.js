@@ -26,7 +26,7 @@ firebase.getFireData("raised", function(data) {
 
 // Socket IO Connection to Clients
 var clients = {};
-var server_version = "0104";
+var server_version = "0105";
 io.on('connection', function(socket) {
   io.emit('version', server_version);
   clients[socket.id] = true;

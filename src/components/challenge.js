@@ -7,7 +7,8 @@ export default class Challenge extends React.Component {
   constructor() {
     super()
     this.state = {
-      visibleLabel: 'hide ▲'
+      visibleLabel: 'hide ▲',
+      chartsVisible: 'show charts ▼',
     }
   }
   changeVisible(e) {
@@ -19,9 +20,18 @@ export default class Challenge extends React.Component {
       this.setState({visibleLabel: 'hide ▲'})
     }
   }
+  changeCharts(e) {
+    e.preventDefault();
+    const { chartsVisible } = this.state
+    if (chartsVisible === 'hide charts ▲') {
+      this.setState({chartsVisible: 'show charts ▼'})
+    } else if (chartsVisible === 'show charts ▼') {
+      this.setState({chartsVisible: 'hide charts ▲'})
+    }
+  }
   render() {
     const { children, number, data } = this.props
-    const { visibleLabel } = this.state
+    const { visibleLabel, chartsVisible } = this.state
     return(
       <div className='row'>
         <div className='col-lg-12'>
@@ -34,6 +44,11 @@ export default class Challenge extends React.Component {
               <a href="#" onClick={this.changeVisible.bind(this)}>
                 {visibleLabel}
               </a>
+              { number == 0 &&
+                <a href="#" onClick={this.changeCharts.bind(this)} style={{marginLeft: 15}}>
+                  {chartsVisible}
+                </a>
+              }
             </small>
           </div>
 
@@ -42,11 +57,11 @@ export default class Challenge extends React.Component {
               visibleLabel === 'hide ▲' &&
               <div>
                 <hr style={{clear: 'both', marginTop: '12px'}}/>
-                <ChallengeChild number={number} data={data}/>
+                <ChallengeChild number={number} data={data} charts={chartsVisible}/>
               </div>
             }
           </div>
-          
+
         </div>
       </div>
     )

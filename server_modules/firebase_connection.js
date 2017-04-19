@@ -38,3 +38,7 @@ exports.updateFireData = function(collection, data) {
     if (err) {console.log("Data could not be saved", error)}
   });
 }
+
+exports.realtimeReference = function(collection, callback) {
+  callback(db.ref(collection));
+}

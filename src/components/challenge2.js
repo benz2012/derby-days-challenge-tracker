@@ -1,58 +1,70 @@
 import React from 'react'
 
 import TeamProfile from './teamProfile'
-import { sortOrder } from './sortOrder'
+import Card from './card'
+import Circle from './circle'
 
 export default class Challenge2 extends React.Component {
-  componentDidUpdate() {
-    const { data } = this.props
-    if (data && Object.keys(data).length !== 0) {
-      this.transformData(data)
-    }
-  }
-  transformData(data) {
-    const flatData = this.flatten(data, '#5ForTheFight')
-    const flatList = []
-    Object.keys(flatData).forEach(key => {
-      flatList.push(flatData[key])
-    })
-    flatList.push({
-      name: '#5ForTheFight',
-      parent: null
-    })
-    return flatList
-  }
-  flatten(obj, parent) {
-    let flat = {}
-    Object.keys(obj).forEach(key => {
-      if (typeof obj[key] === 'object') {
-        flat[key] = {
-          name: key,
-          value: null,
-          parent: parent
-        }
-        const f = this.flatten(obj[key], key)
-        Object.keys(f).forEach(fkey => {
-          flat[`${key}.${fkey}`] = f[fkey]
-        })
-      } else {
-        flat[key] = {
-          name: key,
-          value: obj[key],
-          parent: parent
-        }
+  sortData(data) {
+    const sorted = {b: [], bp: [], np: [], p: []}
+    Object.keys(data).forEach(name => {
+      const type = data[name]
+      if (type === 'BROTHER') {
+        sorted.b.push(name)
+      } else if (type === 'BROTHER_POSTED') {
+        sorted.bp.push(name)
+      } else if (type === 'NOT_POSTED') {
+        sorted.np.push(name)
+      } else if (type === 'POSTED') {
+        sorted.p.push(name)
       }
     })
-    return flat
+    return sorted
+  }
+  formatData(data) {
+    let formatted = {}
+    Object.keys(data).forEach(key => {
+      const list = data[key]
+      const circles = list.map(name => {
+        return <Circle key={name} color={this.colors(key)}>{name}</Circle>
+      })
+      formatted[key] = circles
+    })
+    return formatted
+  }
+  colors(key) {
+    const c = {
+      p: 'rgb(99, 206, 70)',
+      np: 'rgb(244, 167, 66)',
+      bp: 'rgb(0, 157, 220)',
+      b: 'rgb(200, 200, 200)',
+    }
+    return c[key]
   }
   render() {
+    const { data } = this.props
+    const sorted = data && Object.keys(data).length !== 0 ?
+      this.sortData(data) : []
+    const formatted = this.formatData(sorted)
     return(
       <div>
         <blockquote>
-          <p>Donation of $5 for creating a <a target="_blank" href="https://www.facebook.com/search/top/?q=%235ForTheFight">#5ForTheFight</a> Facebook post</p>
+          <p>Donation of $5 for creating a <a target="_blank" href="https://www.facebook.com/search/top/?q=%235ForTheFight">#5ForTheFight</a> Facebook post.</p>
+          <p>Total Accrued:&nbsp;
+            <span className="text-success">
+              ${formatted.p && formatted.p.length*5}
+            </span>
+          </p>
         </blockquote>
         <div>
-          blip
+          <Card title='Posted'
+            contents={formatted.p} color={this.colors('p')}/>
+          <Card title='Tagged' subtitle='but not yet posted'
+            contents={formatted.np} color={this.colors('np')} />
+          <Card title='Brothers Posted' subtitle='no donation for these'
+            contents={formatted.bp} color={this.colors('bp')} textColor='white' />
+          <Card title='Brothers Tagged' subtitle='but not yet posted'
+            contents={formatted.b} color={this.colors('b')} />
         </div>
       </div>
     )

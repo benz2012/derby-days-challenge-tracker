@@ -68,14 +68,55 @@ export default class Challenge1 extends React.Component {
     })
     return projectedTotal
   }
+  centsToDollars(cents) {
+    const centsStr = cents.toString()
+    const len = centsStr.length
+    const centsRemainder = centsStr.substring(len-2, len)
+    const dollars = centsStr.substring(0, len-2)
+    return dollars + '.' + centsRemainder
+  }
+  padCurrency(currency) {
+    let head = '0'
+    let tail = '00'
+    const currencyStr = currency.toString()
+    if (currencyStr.indexOf('.') == -1) {
+      head = currencyStr
+    } else {
+      const sepIdx = currencyStr.indexOf('.')
+      head = currencyStr.substring(0, sepIdx)
+      if (head == '') {
+        head = '0'
+      }
+      tail = currencyStr.substring(sepIdx+1)
+      if (tail.length > 2) {
+        tail = tail.substring(0, 2)
+      } else if (tail.length == 1) {
+        tail = tail + '0'
+      } else if (tail.length == 0) {
+        tail = '00'
+      }
+    }
+    return head + '.' + tail
+  }
   render() {
     const { data } = this.props
-    const teamElements = Object.keys(data).length !== 0 ?
-      this.mapTeams(data) : []
+    let teamElements = [], acc = 0
+    if (Object.keys(data).length !== 0) {
+      teamElements = this.mapTeams(data)
+      Object.keys(data.teams).forEach(teamKey => {
+        const members = data.members[teamKey]
+        acc += this.computeCurrentCents(members)
+      })
+    }
     return(
       <div>
         <blockquote>
           <p>Donation of 5¢ per-team-member, per-day, to each team, until the start of Derby Days.</p>
+          <p>Total Accrued:&nbsp;
+            <span className="text-success">
+              ${this.padCurrency(this.centsToDollars(acc))}
+            </span>
+          </p>
         </blockquote>
         <div>
           {teamElements.length > 0 && teamElements}

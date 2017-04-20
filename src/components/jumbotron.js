@@ -18,13 +18,18 @@ export default class Jumbotron extends React.Component {
       }
     })
   }
+  jumbotronStyle() {
+    return {
+      marginBottom: 0,
+    }
+  }
   render() {
     const { subTitle } = this.props
     const { numWatching, outdated } = this.state
     return(
       <div className='row'>
         <div className='col-lg-12'>
-          <div className='jumbotron' style={{marginBottom: 0}}>
+          <div className='jumbotron' style={this.jumbotronStyle()}>
             <h1>{this.props.children}</h1>
             <p>{subTitle}</p>
             <small>Updates Live, No Refreshing Needed</small>

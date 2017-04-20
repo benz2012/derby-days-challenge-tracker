@@ -19,19 +19,29 @@ export default observer(class App extends React.Component {
       store['MainData'] = data
     })
   }
+  appStyle() {
+    return {
+      paddingBottom: '30px',
+    }
+  }
   render() {
     return(
-      <div className='container' style={{marginBottom: '30px'}}>
-        <Jumbotron subTitle='Challenge Tracker 2017'
-          socket={socket} version={this.state.clientVersion}>
-          Derby Days
-        </Jumbotron>
-        <Challenge number='0' data={store['MainData']}>
-          The Derby Challenge
-        </Challenge>
-        <Challenge number='1' data={store['MainData']}>
-          Challenge 1
-        </Challenge>
+      <div style={this.appStyle()}>
+        <div className='container'>
+          <Jumbotron subTitle='Challenge Tracker 2017'
+            socket={socket} version={this.state.clientVersion}>
+            Derby Days
+          </Jumbotron>
+          <Challenge number='0' data={store['MainData']}>
+            The Derby Challenge
+          </Challenge>
+          <Challenge number='2' data={store['MainData']['fight']}>
+            Challenge 2
+          </Challenge>
+          <Challenge number='1' data={store['MainData']}>
+            Challenge 1
+          </Challenge>
+        </div>
       </div>
     )
   }

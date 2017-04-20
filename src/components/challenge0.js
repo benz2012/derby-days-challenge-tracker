@@ -6,10 +6,11 @@ import { sortOrder } from './sortOrder'
 export default class Challenge0 extends React.Component {
   mapTeams(data) {
     const teamList = []
-    const largestTotal = this.largestTeamTotal(data)
+    const largestTotal = this.largestSororityTotal(data)
     Object.keys(data.teams).forEach(teamKey => {
       let team = data.teams[teamKey]
       team.raised = data.raised[teamKey]
+      team.largest = team.name === 'Sigma Chi' ? this.currentTotal(team.raised) : largestTotal
       teamList.push(team)
     })
     teamList.sort((a, b) => {
@@ -23,7 +24,7 @@ export default class Challenge0 extends React.Component {
       const teamEl = <TeamProfile key={team.name} name={team.name}
         number={0} chapter={team.chapter} raised={currentTotal}
         url={team.team_page_url} charts={this.props.charts}
-        raisedOverTime={team.raised} largest={largestTotal} />
+        raisedOverTime={team.raised} largest={team.largest} />
       return teamEl
     })
     return teamElements
@@ -59,9 +60,10 @@ export default class Challenge0 extends React.Component {
     })
     return total
   }
-  largestTeamTotal(data) {
+  largestSororityTotal(data) {
     let largest = 0
     Object.keys(data.teams).forEach(teamKey => {
+      if (teamKey === 'sigmachi') { return }
       const teamTotal = this.currentTotal(data.raised[teamKey])
       if (teamTotal > largest) {
         largest = teamTotal

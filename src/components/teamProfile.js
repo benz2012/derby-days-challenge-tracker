@@ -51,7 +51,7 @@ export default class TeamProfile extends React.Component {
   }
   statisticStlye() {
     return {
-      color: 'rgb(51, 51, 51)',
+      backgroundColor: 'white',
       padding: '15px 5px',
       textAlign: 'center'
     }

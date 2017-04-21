@@ -28673,7 +28673,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: "0113"
+      clientVersion: "0115"
     };
     return _this;
   }
@@ -28712,6 +28712,11 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
             _challenge2.default,
             { number: '0', data: _dataStore2.default['MainData'] },
             'The Derby Challenge'
+          ),
+          _react2.default.createElement(
+            _challenge2.default,
+            { number: '3', data: _dataStore2.default['MainData']['scavenger'] },
+            'Challenge 3'
           ),
           _react2.default.createElement(
             _challenge2.default,
@@ -28802,7 +28807,10 @@ var Card = function (_React$Component) {
   }, {
     key: 'titleStyle',
     value: function titleStyle(subtitle) {
-      var pad = !subtitle ? '9px 0px' : '0';
+      var pad = '9px 0px';
+      if (subtitle !== undefined && subtitle !== null) {
+        pad = '0px';
+      }
       return {
         margin: '0',
         padding: pad
@@ -28843,7 +28851,7 @@ var Card = function (_React$Component) {
 
       return _react2.default.createElement(
         'div',
-        { className: 'col-lg-3 col-md-6 col-sm-12 col-xs-12', style: { padding: 0 } },
+        { className: 'col-lg-3 col-md-6 col-sm-6 col-xs-12', style: { padding: 0 } },
         _react2.default.createElement(
           'div',
           { style: this.profileStyle(this.state.flash) },
@@ -29432,10 +29440,6 @@ var _react = __webpack_require__(10);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _teamProfile = __webpack_require__(35);
-
-var _teamProfile2 = _interopRequireDefault(_teamProfile);
-
 var _card = __webpack_require__(207);
 
 var _card2 = _interopRequireDefault(_card);
@@ -29632,6 +29636,10 @@ var _challenge5 = __webpack_require__(211);
 
 var _challenge6 = _interopRequireDefault(_challenge5);
 
+var _challenge7 = __webpack_require__(364);
+
+var _challenge8 = _interopRequireDefault(_challenge7);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29660,7 +29668,8 @@ var ChallengeChild = function (_React$Component) {
       var challenges = {
         0: _react2.default.createElement(_challenge2.default, { data: data, charts: charts }),
         1: _react2.default.createElement(_challenge4.default, { data: data }),
-        2: _react2.default.createElement(_challenge6.default, { data: data })
+        2: _react2.default.createElement(_challenge6.default, { data: data }),
+        3: _react2.default.createElement(_challenge8.default, { data: data })
       };
       return number in challenges ? challenges[number] : null;
     }
@@ -56036,6 +56045,221 @@ module.exports = function(module) {
 
 module.exports = __webpack_require__(205);
 
+
+/***/ }),
+/* 364 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(10);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _chart = __webpack_require__(222);
+
+var _chart2 = _interopRequireDefault(_chart);
+
+var _card = __webpack_require__(207);
+
+var _card2 = _interopRequireDefault(_card);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Challenge2 = function (_React$Component) {
+  _inherits(Challenge2, _React$Component);
+
+  function Challenge2() {
+    _classCallCheck(this, Challenge2);
+
+    var _this = _possibleConstructorReturn(this, (Challenge2.__proto__ || Object.getPrototypeOf(Challenge2)).call(this));
+
+    _this.state = {
+      graphs: [],
+      cards: []
+    };
+    return _this;
+  }
+
+  _createClass(Challenge2, [{
+    key: 'mapData',
+    value: function mapData(data) {
+      var all = [];
+      data.forEach(function (item) {
+        if (!item) {
+          return;
+        }
+        var available = item.available,
+            given = item.given,
+            solved = item.solved;
+
+        var a = available - given,
+            g = given - solved,
+            s = solved;
+        var graphData = {
+          labels: ['Available (' + a + ')', 'Unsolved (' + g + ')', 'Solved (' + s + ')'],
+          datasets: [{
+            data: [a, g, s],
+            backgroundColor: ['#36A2EB', 'rgb(200,200,200)', 'rgb(99,206,70)']
+          }]
+        };
+        all.push(graphData);
+      });
+      return all;
+    }
+  }, {
+    key: 'buildGraphs',
+    value: function buildGraphs() {
+      var _this2 = this;
+
+      var graphs = this.state.graphs;
+
+      if (graphs.length > 0) {
+        graphs.forEach(function (graph) {
+          graph.destroy();
+        });
+      }
+      var data = this.props.data;
+
+      if (!data) {
+        return;
+      }
+      var mapped = this.mapData(data);
+      mapped.forEach(function (item, index) {
+        var graphContext = document.getElementById('doughnut-' + (index + 1));
+        var doughnut = new _chart2.default(graphContext, {
+          type: 'doughnut',
+          data: item,
+          options: {
+            animation: { animateRotate: false },
+            cutoutPercentage: 45
+          }
+        });
+        _this2.setState({ graphs: [].concat(_toConsumableArray(_this2.state.graphs), [doughnut]) });
+      });
+    }
+  }, {
+    key: 'drawCards',
+    value: function drawCards() {
+      var cards = [];
+      for (var i = 1; i < 5; i++) {
+        var price = this.props.data ? this.props.data[i].price : '';
+        var canvas = _react2.default.createElement('canvas', { id: 'doughnut-' + i, height: '200',
+          style: this.chartStyle() });
+        var card = _react2.default.createElement(_card2.default, { key: 'Round ' + i, title: 'Round ' + i,
+          subtitle: '$' + price + ' per solve', contents: canvas,
+          color: 'black', textColor: 'white' });
+        cards.push(card);
+      }
+      this.setState({ cards: cards });
+    }
+  }, {
+    key: 'componentWillMount',
+    value: function componentWillMount() {
+      this.drawCards();
+    }
+  }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps) {
+      var _this3 = this;
+
+      if (prevProps.data === undefined && this.props.data && this.props.data.length > 0) {
+        this.drawCards();
+        this.buildGraphs();
+      }
+      if (!this.props.data || !prevProps.data) {
+        return;
+      }
+      var changed = false;
+
+      var _loop = function _loop(i) {
+        Object.keys(prevProps.data[i]).forEach(function (key) {
+          var next = prevProps.data[i][key];
+          var prev = _this3.props.data[i][key];
+          if (next !== prev) {
+            changed = true;
+          }
+        });
+      };
+
+      for (var i = 0; i < prevProps.data.length; i++) {
+        _loop(i);
+      }
+      if (changed) {
+        this.buildGraphs();
+      }
+    }
+  }, {
+    key: 'chartStyle',
+    value: function chartStyle() {
+      return {
+        marginBottom: '0px'
+      };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var accrued = 0;
+      if (this.props.data) {
+        this.props.data.forEach(function (item) {
+          if (!item) {
+            return;
+          }
+          accrued += item.solved * item.price;
+        });
+      }
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'blockquote',
+          null,
+          _react2.default.createElement(
+            'p',
+            null,
+            'A Brothers only scavenger hunt: solve clues, raise money.'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Total Accrued:\xA0',
+            _react2.default.createElement(
+              'span',
+              { className: 'text-success' },
+              '$',
+              accrued
+            ),
+            ' out of $400'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          this.state.cards
+        )
+      );
+    }
+  }]);
+
+  return Challenge2;
+}(_react2.default.Component);
+
+exports.default = Challenge2;
 
 /***/ })
 /******/ ]);

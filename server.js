@@ -11,7 +11,7 @@ var dateKeys = require(__dirname + '/server_modules/dateKeys.js');
 app.use(express.static(__dirname + '/'));
 
 // Load Initial Data from Google Firebase Database
-var teams, members, raised, membersPrev, raisedPrev, fight;
+var teams, members, raised, membersPrev, raisedPrev, fight, scavenger;
 firebase.getFireData("teams", function(data) {
   teams = data;
 });
@@ -26,7 +26,7 @@ firebase.getFireData("raised", function(data) {
 
 // Socket IO Connection to Clients
 var clients = {};
-var server_version = "0113";
+var server_version = "0115";
 io.on('connection', function(socket) {
   socket.emit('version', server_version);
   clients[socket.id] = true;
@@ -41,6 +41,15 @@ io.on('connection', function(socket) {
   firebase.realtimeReference('fight', function(ref) {
     ref.on('value', function(snapshot) {
       fight = snapshot.val();
+      dataForClient(function(data) {
+        io.emit('update_data', data);
+      });
+    });
+  });
+
+  firebase.realtimeReference('scavenger', function(ref) {
+    ref.on('value', function(snapshot) {
+      scavenger = snapshot.val();
       dataForClient(function(data) {
         io.emit('update_data', data);
       });
@@ -136,6 +145,7 @@ function dataForClient(callback) {
   data['members'] = members;
   data['raised'] = raised;
   data['fight'] = fight;
+  data['scavenger'] = scavenger;
   callback(data);
 }
 

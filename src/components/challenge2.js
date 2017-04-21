@@ -1,6 +1,5 @@
 import React from 'react'
 
-import TeamProfile from './teamProfile'
 import Card from './card'
 import Circle from './circle'
 

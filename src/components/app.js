@@ -10,7 +10,7 @@ export default observer(class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      clientVersion: "0113",
+      clientVersion: "0115",
     }
   }
   componentDidMount() {
@@ -34,6 +34,9 @@ export default observer(class App extends React.Component {
           </Jumbotron>
           <Challenge number='0' data={store['MainData']}>
             The Derby Challenge
+          </Challenge>
+          <Challenge number='3' data={store['MainData']['scavenger']}>
+            Challenge 3
           </Challenge>
           <Challenge number='2' data={store['MainData']['fight']}>
             Challenge 2

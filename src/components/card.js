@@ -33,7 +33,10 @@ export default class Card extends React.Component {
     }
   }
   titleStyle(subtitle) {
-    const pad = !subtitle ? '9px 0px' : '0'
+    let pad = '9px 0px'
+    if (subtitle !== undefined && subtitle !== null) {
+      pad = '0px'
+    }
     return {
       margin: '0',
       padding: pad,
@@ -57,7 +60,7 @@ export default class Card extends React.Component {
   render() {
     const { title, subtitle, contents, color, textColor } = this.props
     return(
-      <div className='col-lg-3 col-md-6 col-sm-12 col-xs-12' style={{padding: 0}}>
+      <div className='col-lg-3 col-md-6 col-sm-6 col-xs-12' style={{padding: 0}}>
         <div style={this.profileStyle(this.state.flash)}>
 
           <div style={this.statisticStlye()}>

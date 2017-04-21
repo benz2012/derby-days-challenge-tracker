@@ -46,14 +46,16 @@ export default class Challenge2 extends React.Component {
     const sorted = data && Object.keys(data).length !== 0 ?
       this.sortData(data) : []
     const formatted = this.formatData(sorted)
+    const blip = 270
+    const accrued = formatted.p ? Math.min(formatted.p.length*5, 250) : 0 // max of $250 for this challenge
     return(
       <div>
         <blockquote>
           <p>Donation of $5 for creating a <a target="_blank" href="https://www.facebook.com/search/top/?q=%235ForTheFight">#5ForTheFight</a> Facebook post.</p>
           <p>Total Accrued:&nbsp;
             <span className="text-success">
-              ${formatted.p && formatted.p.length*5}
-            </span>
+              ${accrued}
+            </span> out of $250
           </p>
         </blockquote>
         <div>

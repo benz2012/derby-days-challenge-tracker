@@ -19,8 +19,11 @@ export default class Challenge0 extends React.Component {
       const bLocation = order.indexOf(b.name)
       return aLocation - bLocation
     })
-    var teamElements = teamList.map(team => {
-      const currentTotal = this.currentTotal(team.raised)
+    const teamElements = teamList.map(team => {
+      let currentTotal = this.currentTotal(team.raised)
+      if (team.name === 'Sigma Chi') {
+        currentTotal += 5 // $5 from Lambda Kappa leader page
+      }
       const teamEl = <TeamProfile key={team.name} name={team.name}
         number={0} chapter={team.chapter} raised={currentTotal}
         url={team.team_page_url} charts={this.props.charts}
@@ -53,7 +56,7 @@ export default class Challenge0 extends React.Component {
     return number
   }
   allTeamTotal(data) {
-    let total = 0
+    let total = 5 // $5 from Lambda Kappa leader page
     Object.keys(data.teams).forEach(teamKey => {
       const teamTotal = this.currentTotal(data.raised[teamKey])
       total += teamTotal

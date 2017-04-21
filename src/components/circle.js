@@ -9,19 +9,35 @@ export default class Circle extends React.Component {
   }
   initials(name) {
     const f = name.charAt(0)
+    if (f === '+') { return name.split(' ')[0] }
     const names = name.split(' ')
     const l = names[names.length-1].charAt(0)
     return (f + l).toUpperCase()
   }
-  circleStyle() {
+  circleStyle(initials) {
+    let shadow = ''
+    let backgroundColor = this.props.color
+    let color = 'white'
+    if (initials.charAt(0) === '+') {
+      shadow = 'inset 0px 0px 0px 2px ' + this.props.color
+      backgroundColor = 'none'
+      color = this.props.color
+    }
+    if (this.props.color === '#40E0D0' || this.props.color === 'rgb(255,214,74)') {
+      color = 'rgb(51,51,51)'
+    }
     return {
       position: 'relative',
       display: 'inline-block',
+      WebkitBoxShadow: shadow,
+      MozBoxShadow: shadow,
+      msBoxShadow: shadow,
+      boxShadow: shadow,
       borderRadius: '50%',
       width: '28px',
       height: '28px',
-      backgroundColor: this.props.color,
-      color: 'white',
+      backgroundColor: backgroundColor,
+      color: color,
       textAlign: 'center',
       paddingTop: '3px',
       float: 'left',
@@ -71,7 +87,7 @@ export default class Circle extends React.Component {
     return(
       <div>
 
-        <div style={this.circleStyle()} onMouseEnter={this.mouseOver.bind(this)}
+        <div style={this.circleStyle(initials)} onMouseEnter={this.mouseOver.bind(this)}
           onMouseLeave={this.mouseLeave.bind(this)}>
           {initials}
           <div style={this.hoverStyle()}>

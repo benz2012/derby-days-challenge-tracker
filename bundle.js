@@ -29409,8 +29409,13 @@ var Challenge2 = function (_React$Component) {
           sorted.bp.push(name);
         } else if (type === 'NOT_POSTED') {
           sorted.np.push(name);
-        } else if (type === 'POSTED') {
-          sorted.p.push(name);
+        } else if (type.substring(0, 6) === 'POSTED') {
+          var affil = type.substring(6, type.length);
+          if (affil) {
+            sorted.p.push(name + affil);
+          } else {
+            sorted.p.push(name);
+          }
         }
       });
       return sorted;
@@ -29424,15 +29429,44 @@ var Challenge2 = function (_React$Component) {
       Object.keys(data).forEach(function (key) {
         var list = data[key];
         var circles = list.map(function (name) {
+          var dispName = name;
+          var dispColor = _this2.colors(key);
+          var affil = name.substring(name.length - 4, name.length);
+          if (affil.charAt(0) === '_') {
+            dispName = name.substring(0, name.length - 4);
+            dispColor = _this2.teamColors(affil.substring(1, affil.length));
+          }
           return _react2.default.createElement(
             _circle2.default,
-            { key: name, color: _this2.colors(key) },
-            name
+            { key: name, color: dispColor },
+            dispName
           );
         });
+        if (circles.length > 50) {
+          var remainder = circles.length - 50;
+          var rString = '+' + remainder + ' Others';
+          circles = circles.slice(0, 50);
+          circles.push(_react2.default.createElement(
+            _circle2.default,
+            { key: rString, color: _this2.colors(key) },
+            rString
+          ));
+        }
         formatted[key] = circles;
       });
       return formatted;
+    }
+  }, {
+    key: 'teamColors',
+    value: function teamColors(team) {
+      var colors = {
+        'AXD': 'rgb(28, 61, 128)',
+        'ASA': '#DC143C',
+        'SSS': 'rgb(114,71,156)',
+        'ZTA': '#40E0D0',
+        'DPE': 'rgb(255,214,74)'
+      };
+      return colors[team];
     }
   }, {
     key: 'colors',
@@ -29626,21 +29660,39 @@ var Circle = function (_React$Component) {
     key: 'initials',
     value: function initials(name) {
       var f = name.charAt(0);
+      if (f === '+') {
+        return name.split(' ')[0];
+      }
       var names = name.split(' ');
       var l = names[names.length - 1].charAt(0);
       return (f + l).toUpperCase();
     }
   }, {
     key: 'circleStyle',
-    value: function circleStyle() {
+    value: function circleStyle(initials) {
+      var shadow = '';
+      var backgroundColor = this.props.color;
+      var color = 'white';
+      if (initials.charAt(0) === '+') {
+        shadow = 'inset 0px 0px 0px 2px ' + this.props.color;
+        backgroundColor = 'none';
+        color = this.props.color;
+      }
+      if (this.props.color === '#40E0D0' || this.props.color === 'rgb(255,214,74)') {
+        color = 'rgb(51,51,51)';
+      }
       return {
         position: 'relative',
         display: 'inline-block',
+        WebkitBoxShadow: shadow,
+        MozBoxShadow: shadow,
+        msBoxShadow: shadow,
+        boxShadow: shadow,
         borderRadius: '50%',
         width: '28px',
         height: '28px',
-        backgroundColor: this.props.color,
-        color: 'white',
+        backgroundColor: backgroundColor,
+        color: color,
         textAlign: 'center',
         paddingTop: '3px',
         float: 'left',
@@ -29703,7 +29755,7 @@ var Circle = function (_React$Component) {
         null,
         _react2.default.createElement(
           'div',
-          { style: this.circleStyle(), onMouseEnter: this.mouseOver.bind(this),
+          { style: this.circleStyle(initials), onMouseEnter: this.mouseOver.bind(this),
             onMouseLeave: this.mouseLeave.bind(this) },
           initials,
           _react2.default.createElement(

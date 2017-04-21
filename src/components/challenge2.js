@@ -15,8 +15,13 @@ export default class Challenge2 extends React.Component {
         sorted.bp.push(name)
       } else if (type === 'NOT_POSTED') {
         sorted.np.push(name)
-      } else if (type === 'POSTED') {
-        sorted.p.push(name)
+      } else if (type.substring(0,6) === 'POSTED') {
+        const affil = type.substring(6, type.length)
+        if (affil) {
+          sorted.p.push(name + affil)
+        } else {
+          sorted.p.push(name)
+        }
       }
     })
     return sorted
@@ -25,12 +30,37 @@ export default class Challenge2 extends React.Component {
     let formatted = {}
     Object.keys(data).forEach(key => {
       const list = data[key]
-      const circles = list.map(name => {
-        return <Circle key={name} color={this.colors(key)}>{name}</Circle>
+      let circles = list.map(name => {
+        let dispName = name
+        let dispColor = this.colors(key)
+        const affil = name.substring(name.length-4, name.length)
+        if (affil.charAt(0) === '_') {
+          dispName = name.substring(0, name.length-4)
+          dispColor = this.teamColors(affil.substring(1,affil.length))
+        }
+        return <Circle key={name} color={dispColor}>{dispName}</Circle>
       })
+      if (circles.length > 50) {
+        const remainder = circles.length - 50
+        const rString = '+' + remainder + ' Others'
+        circles = circles.slice(0, 50)
+        circles.push(
+          <Circle key={rString} color={this.colors(key)}>{rString}</Circle>
+        )
+      }
       formatted[key] = circles
     })
     return formatted
+  }
+  teamColors(team) {
+    const colors = {
+      'AXD': 'rgb(28, 61, 128)',
+      'ASA': '#DC143C',
+      'SSS': 'rgb(114,71,156)',
+      'ZTA': '#40E0D0',
+      'DPE': 'rgb(255,214,74)',
+    }
+    return colors[team]
   }
   colors(key) {
     const c = {

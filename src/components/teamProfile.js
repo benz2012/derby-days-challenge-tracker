@@ -192,6 +192,25 @@ export default class TeamProfile extends React.Component {
   render() {
     const { name, chapter, number, raised, members, current,
       projected, url, charts } = this.props
+
+    let below
+    if (number === 1) {
+      below = <div>
+        <div>
+          Current: ${this.padCurrency(this.centsToDollars(current))}
+        </div>
+        <div>
+          Projected: ${this.padCurrency(this.centsToDollars(projected))}
+        </div>
+      </div>
+      const today = new Date()
+      const end = new Date('2017-04-22')
+      if (today.getTime() > end.getTime()) {
+        below = <div>
+          Received: ${this.padCurrency(this.centsToDollars(current))}
+        </div>
+      }
+    }
     return(
       <div className='col-lg-2 col-md-3 col-sm-4 col-xs-6' style={{padding: 0}}>
         <div style={this.profileStyle(this.state.flash)}>
@@ -210,12 +229,7 @@ export default class TeamProfile extends React.Component {
             { number === 1 &&
               <div>
                 <div>Members: {members}</div>
-                <div>Current: ${
-                  this.padCurrency(this.centsToDollars(current))
-                }</div>
-                <div>Projected: ${
-                  this.padCurrency(this.centsToDollars(projected))
-                }</div>
+                <div>{below}</div>
               </div>
             }
           </div>

@@ -9518,6 +9518,36 @@ var TeamProfile = function (_React$Component) {
           url = _props2.url,
           charts = _props2.charts;
 
+
+      var below = void 0;
+      if (number === 1) {
+        below = _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'div',
+            null,
+            'Current: $',
+            this.padCurrency(this.centsToDollars(current))
+          ),
+          _react2.default.createElement(
+            'div',
+            null,
+            'Projected: $',
+            this.padCurrency(this.centsToDollars(projected))
+          )
+        );
+        var today = new Date();
+        var end = new Date('2017-04-22');
+        if (today.getTime() > end.getTime()) {
+          below = _react2.default.createElement(
+            'div',
+            null,
+            'Received: $',
+            this.padCurrency(this.centsToDollars(current))
+          );
+        }
+      }
       return _react2.default.createElement(
         'div',
         { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-6', style: { padding: 0 } },
@@ -9551,14 +9581,7 @@ var TeamProfile = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 null,
-                'Current: $',
-                this.padCurrency(this.centsToDollars(current))
-              ),
-              _react2.default.createElement(
-                'div',
-                null,
-                'Projected: $',
-                this.padCurrency(this.centsToDollars(projected))
+                below
               )
             )
           ),

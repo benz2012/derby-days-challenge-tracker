@@ -9292,7 +9292,8 @@ var TeamProfile = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (TeamProfile.__proto__ || Object.getPrototypeOf(TeamProfile)).call(this));
 
     _this.state = {
-      chart: null
+      chart: null,
+      flash: false
     };
     return _this;
   }
@@ -9312,8 +9313,9 @@ var TeamProfile = function (_React$Component) {
     }
   }, {
     key: 'profileStyle',
-    value: function profileStyle() {
-      var shadow = '0px 0px 8px rgba(0,0,0,0.25)';
+    value: function profileStyle(flash) {
+      var shadow = flash ? '0px 0px 20px 0px rgba(0, 255, 0, 0.7)' : '0px 0px 8px rgba(0,0,0,0.25)';
+      var transition = "box-shadow 300ms";
       return {
         textAlign: 'center',
         marginRight: '10px',
@@ -9321,7 +9323,12 @@ var TeamProfile = function (_React$Component) {
         WebkitBoxShadow: shadow,
         MozBoxShadow: shadow,
         msBoxShadow: shadow,
-        boxShadow: shadow
+        boxShadow: shadow,
+        WebkitTransition: transition,
+        MozTransition: transition,
+        msTransition: transition,
+        transition: transition,
+        transitionTimingFunction: 'ease-out'
       };
     }
   }, {
@@ -9477,8 +9484,17 @@ var TeamProfile = function (_React$Component) {
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate(prevProps) {
+      var _this2 = this;
+
       if (prevProps.charts === 'show charts ▼' && this.props.charts === 'hide charts ▲') {
         this.buildChart();
+      }
+      if (prevProps.raised !== this.props.raised || prevProps.members !== this.props.members || prevProps.current !== this.props.current || prevProps.projected !== this.props.projected) {
+        console.log('a change happened');
+        this.setState({ flash: true });
+        setTimeout(function () {
+          _this2.setState({ flash: false });
+        }, 1000);
       }
     }
   }, {
@@ -9507,7 +9523,7 @@ var TeamProfile = function (_React$Component) {
         { className: 'col-lg-2 col-md-3 col-sm-4 col-xs-6', style: { padding: 0 } },
         _react2.default.createElement(
           'div',
-          { style: this.profileStyle() },
+          { style: this.profileStyle(this.state.flash) },
           number === 0 && charts === 'hide charts ▲' && _react2.default.createElement('canvas', { id: name + 'chart', height: '170',
             style: this.chartStyle() }),
           _react2.default.createElement(
@@ -28634,7 +28650,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: "0108"
+      clientVersion: "0110"
     };
     return _this;
   }
@@ -28723,13 +28739,19 @@ var Card = function (_React$Component) {
   function Card() {
     _classCallCheck(this, Card);
 
-    return _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).apply(this, arguments));
+    var _this = _possibleConstructorReturn(this, (Card.__proto__ || Object.getPrototypeOf(Card)).call(this));
+
+    _this.state = {
+      flash: false
+    };
+    return _this;
   }
 
   _createClass(Card, [{
     key: 'profileStyle',
-    value: function profileStyle() {
-      var shadow = '0px 0px 8px rgba(0,0,0,0.25)';
+    value: function profileStyle(flash) {
+      var shadow = flash ? '0px 0px 20px 0px rgba(0, 255, 0, 0.7)' : '0px 0px 8px rgba(0,0,0,0.25)';
+      var transition = "box-shadow 300ms";
       return {
         textAlign: 'center',
         marginRight: '10px',
@@ -28737,7 +28759,12 @@ var Card = function (_React$Component) {
         WebkitBoxShadow: shadow,
         MozBoxShadow: shadow,
         msBoxShadow: shadow,
-        boxShadow: shadow
+        boxShadow: shadow,
+        WebkitTransition: transition,
+        MozTransition: transition,
+        msTransition: transition,
+        transition: transition,
+        transitionTimingFunction: 'ease-out'
       };
     }
   }, {
@@ -28768,6 +28795,20 @@ var Card = function (_React$Component) {
       };
     }
   }, {
+    key: 'componentDidUpdate',
+    value: function componentDidUpdate(prevProps, prevState) {
+      var _this2 = this;
+
+      if (prevProps.contents) {
+        if (prevProps.contents.length !== this.props.contents.length) {
+          this.setState({ flash: true });
+          setTimeout(function () {
+            _this2.setState({ flash: false });
+          }, 1000);
+        }
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _props = this.props,
@@ -28782,7 +28823,7 @@ var Card = function (_React$Component) {
         { className: 'col-lg-3 col-md-6 col-sm-12 col-xs-12', style: { padding: 0 } },
         _react2.default.createElement(
           'div',
-          { style: this.profileStyle() },
+          { style: this.profileStyle(this.state.flash) },
           _react2.default.createElement(
             'div',
             { style: this.statisticStlye() },

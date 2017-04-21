@@ -5,7 +5,8 @@ export default class TeamProfile extends React.Component {
   constructor() {
     super()
     this.state = {
-      chart: null
+      chart: null,
+      flash: false
     }
   }
   colors(team) {
@@ -19,8 +20,9 @@ export default class TeamProfile extends React.Component {
     }
     return colors[team]
   }
-  profileStyle() {
-    const shadow = '0px 0px 8px rgba(0,0,0,0.25)'
+  profileStyle(flash) {
+    const shadow = flash ? '0px 0px 20px 0px rgba(0, 255, 0, 0.7)' : '0px 0px 8px rgba(0,0,0,0.25)'
+    const transition = "box-shadow 300ms"
     return {
       textAlign: 'center',
       marginRight: '10px',
@@ -29,6 +31,11 @@ export default class TeamProfile extends React.Component {
       MozBoxShadow: shadow,
       msBoxShadow: shadow,
       boxShadow: shadow,
+      WebkitTransition: transition,
+      MozTransition: transition,
+      msTransition: transition,
+      transition: transition,
+      transitionTimingFunction: 'ease-out',
     }
   }
   baseStyle(team) {
@@ -168,6 +175,14 @@ export default class TeamProfile extends React.Component {
     if (prevProps.charts === 'show charts ▼' && this.props.charts === 'hide charts ▲') {
       this.buildChart()
     }
+    if (prevProps.raised !== this.props.raised ||
+    prevProps.members !== this.props.members ||
+    prevProps.current !== this.props.current ||
+    prevProps.projected !== this.props.projected) {
+      console.log('a change happened')
+      this.setState({flash: true})
+      setTimeout(() => {this.setState({flash: false})}, 1000)
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (this.props.charts === 'hide charts ▲' && nextProps.charts === 'show charts ▼') {
@@ -179,7 +194,7 @@ export default class TeamProfile extends React.Component {
       projected, url, charts } = this.props
     return(
       <div className='col-lg-2 col-md-3 col-sm-4 col-xs-6' style={{padding: 0}}>
-        <div style={this.profileStyle()}>
+        <div style={this.profileStyle(this.state.flash)}>
 
           { number === 0 && charts === 'hide charts ▲' &&
             <canvas id={name + 'chart'} height='170'

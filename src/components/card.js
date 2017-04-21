@@ -1,8 +1,15 @@
 import React from 'react'
 
 export default class Card extends React.Component {
-  profileStyle() {
-    const shadow = '0px 0px 8px rgba(0,0,0,0.25)'
+  constructor() {
+    super()
+    this.state = {
+      flash: false,
+    }
+  }
+  profileStyle(flash) {
+    const shadow = flash ? '0px 0px 20px 0px rgba(0, 255, 0, 0.7)' : '0px 0px 8px rgba(0,0,0,0.25)'
+    const transition = "box-shadow 300ms"
     return {
       textAlign: 'center',
       marginRight: '10px',
@@ -11,6 +18,11 @@ export default class Card extends React.Component {
       MozBoxShadow: shadow,
       msBoxShadow: shadow,
       boxShadow: shadow,
+      WebkitTransition: transition,
+      MozTransition: transition,
+      msTransition: transition,
+      transition: transition,
+      transitionTimingFunction: 'ease-out',
     }
   }
   baseStyle(color, textColor) {
@@ -34,11 +46,19 @@ export default class Card extends React.Component {
       textAlign: 'center',
     }
   }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.contents) {
+      if (prevProps.contents.length !== this.props.contents.length) {
+        this.setState({flash: true})
+        setTimeout(() => {this.setState({flash: false})}, 1000)
+      }
+    }
+  }
   render() {
     const { title, subtitle, contents, color, textColor } = this.props
     return(
       <div className='col-lg-3 col-md-6 col-sm-12 col-xs-12' style={{padding: 0}}>
-        <div style={this.profileStyle()}>
+        <div style={this.profileStyle(this.state.flash)}>
 
           <div style={this.statisticStlye()}>
             {contents}

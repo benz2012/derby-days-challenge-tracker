@@ -10,7 +10,7 @@ export default observer(class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      clientVersion: 114,
+      clientVersion: 116,
     }
   }
   componentDidMount() {

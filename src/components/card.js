@@ -8,7 +8,7 @@ export default class Card extends React.Component {
     }
   }
   profileStyle(flash) {
-    const shadow = flash ? '0px 0px 20px 0px rgba(0, 255, 0, 0.7)' : '0px 0px 8px rgba(0,0,0,0.25)'
+    const shadow = flash ? '0px 0px 20px 1px rgba(0, 255, 0, 1)' : '0px 0px 8px rgba(0,0,0,0.25)'
     const transition = "box-shadow 300ms"
     return {
       textAlign: 'center',

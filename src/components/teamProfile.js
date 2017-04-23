@@ -21,7 +21,7 @@ export default class TeamProfile extends React.Component {
     return colors[team]
   }
   profileStyle(flash) {
-    const shadow = flash ? '0px 0px 20px 0px rgba(0, 255, 0, 0.7)' : '0px 0px 8px rgba(0,0,0,0.25)'
+    const shadow = flash ? '0px 0px 20px 1px rgba(0, 255, 0, 1)' : '0px 0px 8px rgba(0,0,0,0.25)'
     const transition = "box-shadow 300ms"
     return {
       textAlign: 'center',
@@ -179,7 +179,13 @@ export default class TeamProfile extends React.Component {
     prevProps.members !== this.props.members ||
     prevProps.current !== this.props.current ||
     prevProps.projected !== this.props.projected) {
-      console.log('a change happened')
+      // console.log('a change happened')
+      if (this.props.number === 0) {
+        if (this.state.chart) {
+          this.state.chart.destroy()
+        }
+        this.buildChart()
+      }
       this.setState({flash: true})
       setTimeout(() => {this.setState({flash: false})}, 1000)
     }

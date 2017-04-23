@@ -7,12 +7,12 @@ import Challenge3 from './challenge3'
 
 export default class ChallengeChild extends React.Component {
   pickChild() {
-    const { number, data, charts } = this.props
+    const { number, data, charts, visible } = this.props
     const challenges = {
       0: <Challenge0 data={data} charts={charts}/>,
       1: <Challenge1 data={data} />,
       2: <Challenge2 data={data} />,
-      3: <Challenge3 data={data} />,
+      3: <Challenge3 data={data} visible={visible} />,
     }
     return number in challenges ? challenges[number] : null
   }

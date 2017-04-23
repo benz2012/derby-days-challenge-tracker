@@ -57,7 +57,8 @@ export default class Challenge extends React.Component {
               visibleLabel === 'hide ▲' &&
               <div>
                 <hr style={{clear: 'both', marginTop: '12px'}}/>
-                <ChallengeChild number={number} data={data} charts={chartsVisible}/>
+                <ChallengeChild number={number} data={data}
+                  charts={chartsVisible} visible={visibleLabel} />
               </div>
             }
           </div>

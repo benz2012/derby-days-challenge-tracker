@@ -67,6 +67,18 @@ export default class Challenge2 extends React.Component {
   componentWillMount() {
     this.drawCards()
   }
+  componentDidMount() {
+    let allCardsExist = true
+    Array([1,2,3,4]).forEach(index => {
+      const ctx = document.getElementById(`doughnut-${index}`)
+      if (ctx) {
+        allCardsExist = false
+      }
+    })
+    if (allCardsExist) {
+      this.buildGraphs()
+    }
+  }
   componentDidUpdate(prevProps) {
     if (prevProps.data === undefined && this.props.data &&
     this.props.data.length > 0) {
@@ -85,6 +97,11 @@ export default class Challenge2 extends React.Component {
       })
     }
     if (changed) {
+      this.buildGraphs()
+    }
+    if (prevProps.visible === 'show ▼' && this.props.visible === 'hide ▲') {
+      console.log('show')
+      this.drawCards()
       this.buildGraphs()
     }
   }

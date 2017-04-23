@@ -10,7 +10,7 @@ export default class Challenge0 extends React.Component {
     Object.keys(data.teams).forEach(teamKey => {
       let team = data.teams[teamKey]
       team.raised = data.raised[teamKey]
-      team.largest = team.name === 'Sigma Chi' ? this.currentTotal(team.raised) : largestTotal
+      team.largest = team.name === 'Sigma Chi' ? this.currentTotal(team.raised) + 5 : largestTotal
       teamList.push(team)
     })
     teamList.sort((a, b) => {
@@ -43,6 +43,18 @@ export default class Challenge0 extends React.Component {
     })
     return currentTotal
   }
+  yesterdayTotal(raised) {
+    let yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    const yKey = this.structureKey(yesterday)
+    let yesterdayTotal = 0;
+    Object.keys(raised).forEach(dateKey => {
+      if (dateKey === yKey) {
+        yesterdayTotal = raised[dateKey]
+      }
+    })
+    return yesterdayTotal
+  }
   structureKey(date) {
     const key = date.getFullYear() + '-' +
       this.padDate(date.getMonth() + 1) + '-' +
@@ -57,11 +69,14 @@ export default class Challenge0 extends React.Component {
   }
   allTeamTotal(data) {
     let total = 5 // $5 from Lambda Kappa leader page
+    let yTotal = 5
     Object.keys(data.teams).forEach(teamKey => {
       const teamTotal = this.currentTotal(data.raised[teamKey])
+      const yesterdayTotal = this.yesterdayTotal(data.raised[teamKey])
       total += teamTotal
+      yTotal += yesterdayTotal
     })
-    return total
+    return [total, yTotal]
   }
   largestSororityTotal(data) {
     let largest = 0
@@ -101,15 +116,20 @@ export default class Challenge0 extends React.Component {
     const { data } = this.props
     let teamElements = []
     let allTeamTotal = 0
+    let allTeamPercentage = 0
     if (Object.keys(data).length !== 0) {
       teamElements = this.mapTeams(this.props.data)
-      allTeamTotal = this.padCurrency(this.allTeamTotal(data))
+      const totals = this.allTeamTotal(data)
+      allTeamTotal = this.padCurrency(totals[0])
+      // console.log(totals[0], totals[1])
+      allTeamPercentage = String(((totals[0]-totals[1])/totals[1])*100, 1).substring(0,3)
     }
     return(
       <div>
         <blockquote>
           <p>The Derby Challenge is a friendly competition amongst chapters raising funds for cancer research at Huntsman Cancer Institute.</p>
-          <p>Total Raised by All Teams: <span className="text-success">${allTeamTotal}</span></p>
+          <p>Total Raised by All Teams: <span className="text-success">
+            ${allTeamTotal}</span> <em style={{color: 'rgb(175,175,175)'}}>+{allTeamPercentage}%</em></p>
         </blockquote>
         <div>
           {teamElements.length > 0 && teamElements}

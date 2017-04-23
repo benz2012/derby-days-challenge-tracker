@@ -28889,7 +28889,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: "0115"
+      clientVersion: 113
     };
     return _this;
   }
@@ -29134,7 +29134,7 @@ var Challenge0 = function (_React$Component) {
       Object.keys(data.teams).forEach(function (teamKey) {
         var team = data.teams[teamKey];
         team.raised = data.raised[teamKey];
-        team.largest = team.name === 'Sigma Chi' ? _this2.currentTotal(team.raised) : largestTotal;
+        team.largest = team.name === 'Sigma Chi' ? _this2.currentTotal(team.raised) + 5 : largestTotal;
         teamList.push(team);
       });
       teamList.sort(function (a, b) {
@@ -29170,6 +29170,20 @@ var Challenge0 = function (_React$Component) {
       return currentTotal;
     }
   }, {
+    key: 'yesterdayTotal',
+    value: function yesterdayTotal(raised) {
+      var yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      var yKey = this.structureKey(yesterday);
+      var yesterdayTotal = 0;
+      Object.keys(raised).forEach(function (dateKey) {
+        if (dateKey === yKey) {
+          yesterdayTotal = raised[dateKey];
+        }
+      });
+      return yesterdayTotal;
+    }
+  }, {
     key: 'structureKey',
     value: function structureKey(date) {
       var key = date.getFullYear() + '-' + this.padDate(date.getMonth() + 1) + '-' + this.padDate(date.getDate());
@@ -29189,11 +29203,14 @@ var Challenge0 = function (_React$Component) {
       var _this3 = this;
 
       var total = 5; // $5 from Lambda Kappa leader page
+      var yTotal = 5;
       Object.keys(data.teams).forEach(function (teamKey) {
         var teamTotal = _this3.currentTotal(data.raised[teamKey]);
+        var yesterdayTotal = _this3.yesterdayTotal(data.raised[teamKey]);
         total += teamTotal;
+        yTotal += yesterdayTotal;
       });
-      return total;
+      return [total, yTotal];
     }
   }, {
     key: 'largestSororityTotal',
@@ -29244,9 +29261,13 @@ var Challenge0 = function (_React$Component) {
 
       var teamElements = [];
       var allTeamTotal = 0;
+      var allTeamPercentage = 0;
       if (Object.keys(data).length !== 0) {
         teamElements = this.mapTeams(this.props.data);
-        allTeamTotal = this.padCurrency(this.allTeamTotal(data));
+        var totals = this.allTeamTotal(data);
+        allTeamTotal = this.padCurrency(totals[0]);
+        // console.log(totals[0], totals[1])
+        allTeamPercentage = String((totals[0] - totals[1]) / totals[1] * 100, 1).substring(0, 3);
       }
       return _react2.default.createElement(
         'div',
@@ -29268,6 +29289,14 @@ var Challenge0 = function (_React$Component) {
               { className: 'text-success' },
               '$',
               allTeamTotal
+            ),
+            ' ',
+            _react2.default.createElement(
+              'em',
+              { style: { color: 'rgb(175,175,175)' } },
+              '+',
+              allTeamPercentage,
+              '%'
             )
           )
         ),

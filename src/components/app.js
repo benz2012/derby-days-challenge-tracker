@@ -10,7 +10,7 @@ export default observer(class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      clientVersion: 113,
+      clientVersion: 114,
     }
   }
   componentDidMount() {
@@ -35,14 +35,14 @@ export default observer(class App extends React.Component {
           <Challenge number='0' data={store['MainData']}>
             The Derby Challenge
           </Challenge>
-          <Challenge number='3' data={store['MainData']['scavenger']}>
-            Challenge 3
+          <Challenge number='1' data={store['MainData']}>
+            Challenge 1
           </Challenge>
           <Challenge number='2' data={store['MainData']['fight']}>
             Challenge 2
           </Challenge>
-          <Challenge number='1' data={store['MainData']}>
-            Challenge 1
+          <Challenge number='3' data={store['MainData']['scavenger']}>
+            Challenge 3
           </Challenge>
         </div>
       </div>

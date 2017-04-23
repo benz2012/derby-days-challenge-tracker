@@ -123,6 +123,9 @@ export default class Challenge0 extends React.Component {
       allTeamTotal = this.padCurrency(totals[0])
       // console.log(totals[0], totals[1])
       allTeamPercentage = String(((totals[0]-totals[1])/totals[1])*100, 1).substring(0,3)
+      if (allTeamPercentage.charAt(allTeamPercentage.length-1) === '.') {
+        allTeamPercentage = allTeamPercentage.substring(0,allTeamPercentage.length-1)
+      }
     }
     return(
       <div>

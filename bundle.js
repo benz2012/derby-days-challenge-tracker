@@ -28889,7 +28889,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: 113
+      clientVersion: 114
     };
     return _this;
   }
@@ -28931,8 +28931,8 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
           ),
           _react2.default.createElement(
             _challenge2.default,
-            { number: '3', data: _dataStore2.default['MainData']['scavenger'] },
-            'Challenge 3'
+            { number: '1', data: _dataStore2.default['MainData'] },
+            'Challenge 1'
           ),
           _react2.default.createElement(
             _challenge2.default,
@@ -28941,8 +28941,8 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
           ),
           _react2.default.createElement(
             _challenge2.default,
-            { number: '1', data: _dataStore2.default['MainData'] },
-            'Challenge 1'
+            { number: '3', data: _dataStore2.default['MainData']['scavenger'] },
+            'Challenge 3'
           )
         )
       );
@@ -29021,6 +29021,13 @@ var Challenge = function (_React$Component) {
         this.setState({ chartsVisible: 'show charts ▼' });
       } else if (chartsVisible === 'show charts ▼') {
         this.setState({ chartsVisible: 'hide charts ▲' });
+      }
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (this.props.number === '1') {
+        this.setState({ visibleLabel: 'show ▼' });
       }
     }
   }, {
@@ -29268,6 +29275,9 @@ var Challenge0 = function (_React$Component) {
         allTeamTotal = this.padCurrency(totals[0]);
         // console.log(totals[0], totals[1])
         allTeamPercentage = String((totals[0] - totals[1]) / totals[1] * 100, 1).substring(0, 3);
+        if (allTeamPercentage.charAt(allTeamPercentage.length - 1) === '.') {
+          allTeamPercentage = allTeamPercentage.substring(0, allTeamPercentage.length - 1);
+        }
       }
       return _react2.default.createElement(
         'div',
@@ -29486,6 +29496,15 @@ var Challenge1 = function (_React$Component) {
         _react2.default.createElement(
           'blockquote',
           null,
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'text-danger' },
+              'Challenge Ended'
+            )
+          ),
           _react2.default.createElement(
             'p',
             null,

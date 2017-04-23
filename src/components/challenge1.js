@@ -111,6 +111,7 @@ export default class Challenge1 extends React.Component {
     return(
       <div>
         <blockquote>
+          <p><span className='text-danger'>Challenge Ended</span></p>
           <p>Donation of 5¢ per-team-member, per-day, to each team, until the start of Derby Days.</p>
           <p>Total Accrued:&nbsp;
             <span className="text-success">

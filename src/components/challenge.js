@@ -29,6 +29,11 @@ export default class Challenge extends React.Component {
       this.setState({chartsVisible: 'hide charts ▲'})
     }
   }
+  componentDidMount() {
+    if (this.props.number === '1') {
+      this.setState({visibleLabel: 'show ▼'})
+    }
+  }
   render() {
     const { children, number, data } = this.props
     const { visibleLabel, chartsVisible } = this.state

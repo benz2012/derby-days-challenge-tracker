@@ -29299,15 +29299,14 @@ var Challenge0 = function (_React$Component) {
               { className: 'text-success' },
               '$',
               allTeamTotal
-            ),
-            ' ',
-            _react2.default.createElement(
-              'em',
-              { style: { color: 'rgb(175,175,175)' } },
-              '+',
-              allTeamPercentage,
-              '%'
             )
+          ),
+          _react2.default.createElement(
+            'small',
+            null,
+            'Today\'s Increase: +',
+            allTeamPercentage,
+            '%'
           )
         ),
         _react2.default.createElement(

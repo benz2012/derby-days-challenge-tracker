@@ -132,7 +132,8 @@ export default class Challenge0 extends React.Component {
         <blockquote>
           <p>The Derby Challenge is a friendly competition amongst chapters raising funds for cancer research at Huntsman Cancer Institute.</p>
           <p>Total Raised by All Teams: <span className="text-success">
-            ${allTeamTotal}</span> <em style={{color: 'rgb(175,175,175)'}}>+{allTeamPercentage}%</em></p>
+            ${allTeamTotal}</span></p>
+            <small>Today's Increase: +{allTeamPercentage}%</small>
         </blockquote>
         <div>
           {teamElements.length > 0 && teamElements}

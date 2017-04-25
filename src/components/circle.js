@@ -19,7 +19,7 @@ export default class Circle extends React.Component {
     let backgroundColor = this.props.color
     let color = 'white'
     if (initials.charAt(0) === '+') {
-      shadow = 'inset 0px 0px 0px 2px ' + this.props.color
+      // shadow = 'inset 0px 0px 0px 2px ' + this.props.color
       backgroundColor = 'none'
       color = this.props.color
     }

@@ -30094,7 +30094,7 @@ var Circle = function (_React$Component) {
       var backgroundColor = this.props.color;
       var color = 'white';
       if (initials.charAt(0) === '+') {
-        shadow = 'inset 0px 0px 0px 2px ' + this.props.color;
+        // shadow = 'inset 0px 0px 0px 2px ' + this.props.color
         backgroundColor = 'none';
         color = this.props.color;
       }

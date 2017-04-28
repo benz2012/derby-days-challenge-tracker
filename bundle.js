@@ -11982,7 +11982,8 @@ var TeamProfile = function (_React$Component) {
               _react2.default.createElement(
                 'div',
                 null,
-                'Total Raised: $',
+                name === 'Sigma Sigma Sigma' ? 'Total Raised*' : 'Total Raised',
+                ': $',
                 this.padCurrency(raised)
               )
             ),
@@ -29397,6 +29398,11 @@ var Challenge0 = function (_React$Component) {
           'div',
           null,
           teamElements.length > 0 && teamElements
+        ),
+        _react2.default.createElement(
+          'small',
+          null,
+          '* includes donations not made thru the Derby Challenge website'
         )
       );
     }

@@ -160,6 +160,7 @@ export default class Challenge0 extends React.Component {
         <div>
           {teamElements.length > 0 && teamElements}
         </div>
+        <small>* includes donations not made thru the Derby Challenge website</small>
       </div>
     )
   }

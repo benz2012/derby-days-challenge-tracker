@@ -253,7 +253,9 @@ export default class TeamProfile extends React.Component {
           <div style={this.statisticStlye()}>
             { number === 0 &&
               <div>
-                <div>Total Raised: ${this.padCurrency(raised)}</div>
+                <div>{name === 'Sigma Sigma Sigma' ? 'Total Raised*' : 'Total Raised'}: $
+                  {this.padCurrency(raised)}
+                </div>
               </div>
             }
             { number === 1 &&

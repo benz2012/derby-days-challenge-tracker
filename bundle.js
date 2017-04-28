@@ -28889,7 +28889,8 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: 116
+      clientVersion: 118,
+      outdated: false
     };
     return _this;
   }
@@ -28897,9 +28898,16 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
   _createClass(App, [{
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this2 = this;
+
       socket.emit('ready');
       socket.on('update_data', function (data) {
         _dataStore2.default['MainData'] = data;
+      });
+      socket.on('version', function (serverVersion) {
+        if (_this2.state.clientVersion !== serverVersion) {
+          _this2.setState({ outdated: true });
+        }
       });
     }
   }, {
@@ -28910,18 +28918,44 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
       };
     }
   }, {
+    key: 'warningStyle',
+    value: function warningStyle() {
+      return {
+        position: 'fixed',
+        left: '0',
+        top: '0',
+        width: '100%',
+        zIndex: '999'
+      };
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var outdated = this.state.outdated;
+
       return _react2.default.createElement(
         'div',
         { style: this.appStyle() },
+        outdated && _react2.default.createElement(
+          'div',
+          { style: this.warningStyle() },
+          _react2.default.createElement(
+            'a',
+            { href: 'http://derby-days.herokuapp.com', className: 'btn btn-danger btn-block' },
+            _react2.default.createElement(
+              'strong',
+              null,
+              'Your page is out of date, please refresh.'
+            )
+          )
+        ),
         _react2.default.createElement(
           'div',
           { className: 'container' },
           _react2.default.createElement(
             _jumbotron2.default,
             { subTitle: 'Challenge Tracker 2017',
-              socket: socket, version: this.state.clientVersion },
+              socket: socket },
             'Derby Days'
           ),
           _react2.default.createElement(
@@ -30228,8 +30262,7 @@ var Jumbotron = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Jumbotron.__proto__ || Object.getPrototypeOf(Jumbotron)).call(this));
 
     _this.state = {
-      numWatching: 1,
-      outdated: false
+      numWatching: 1
     };
     return _this;
   }
@@ -30241,11 +30274,6 @@ var Jumbotron = function (_React$Component) {
 
       this.props.socket.on('number_watching', function (num) {
         _this2.setState({ numWatching: num });
-      });
-      this.props.socket.on('version', function (serverVersion) {
-        if (_this2.props.version !== serverVersion) {
-          _this2.setState({ outdated: true });
-        }
       });
     }
   }, {
@@ -30259,9 +30287,7 @@ var Jumbotron = function (_React$Component) {
     key: 'render',
     value: function render() {
       var subTitle = this.props.subTitle;
-      var _state = this.state,
-          numWatching = _state.numWatching,
-          outdated = _state.outdated;
+      var numWatching = this.state.numWatching;
 
       return _react2.default.createElement(
         'div',
@@ -30288,11 +30314,7 @@ var Jumbotron = function (_React$Component) {
               'Updates Live, No Refreshing Needed'
             )
           ),
-          outdated ? _react2.default.createElement(
-            'a',
-            { href: 'http://derby-days.herokuapp.com', className: 'btn btn-danger btn-block' },
-            'Your page is out of date, please refresh.'
-          ) : _react2.default.createElement(
+          _react2.default.createElement(
             'div',
             null,
             _react2.default.createElement(

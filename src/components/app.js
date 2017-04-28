@@ -10,7 +10,8 @@ export default observer(class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      clientVersion: 116,
+      clientVersion: 118,
+      outdated: false,
     }
   }
   componentDidMount() {
@@ -18,18 +19,43 @@ export default observer(class App extends React.Component {
     socket.on('update_data', data => {
       store['MainData'] = data
     })
+    socket.on('version', serverVersion => {
+      if (this.state.clientVersion !== serverVersion) {
+        this.setState({outdated: true})
+      }
+    })
   }
   appStyle() {
     return {
       paddingBottom: '30px',
     }
   }
+  warningStyle() {
+    return {
+      position: 'fixed',
+      left: '0',
+      top: '0',
+      width: '100%',
+      zIndex: '999',
+    }
+  }
   render() {
+    const { outdated } = this.state
     return(
       <div style={this.appStyle()}>
+
+        {
+          outdated &&
+          <div style={this.warningStyle()}>
+            <a href="http://derby-days.herokuapp.com" className="btn btn-danger btn-block">
+              <strong>Your page is out of date, please refresh.</strong>
+            </a>
+          </div>
+        }
+
         <div className='container'>
           <Jumbotron subTitle='Challenge Tracker 2017'
-            socket={socket} version={this.state.clientVersion}>
+            socket={socket}>
             Derby Days
           </Jumbotron>
           <Challenge number='0' data={store['MainData']}>

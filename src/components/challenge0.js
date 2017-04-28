@@ -24,6 +24,11 @@ export default class Challenge0 extends React.Component {
       if (team.name === 'Sigma Chi') {
         currentTotal += 5 // $5 from Lambda Kappa leader page
       }
+      if (team.name === 'Sigma Sigma Sigma') {
+        currentTotal += 1500 // $1500 from SSS
+        team.raised = this.adjustGraphData(team.raised)
+        // console.log(team.raised)
+      }
       const teamEl = <TeamProfile key={team.name} name={team.name}
         number={0} chapter={team.chapter} raised={currentTotal}
         url={team.team_page_url} charts={this.props.charts}
@@ -55,6 +60,17 @@ export default class Challenge0 extends React.Component {
     })
     return yesterdayTotal
   }
+  adjustGraphData(raised) {
+    const begin = new Date('2017-04-28')
+    Object.keys(raised).forEach(dateKey => {
+      const date = new Date(dateKey)
+      // console.log(date, ' ? ', begin)
+      if (date >= begin) {
+        // raised[dateKey] += 1500
+      }
+    })
+    return raised
+  }
   structureKey(date) {
     const key = date.getFullYear() + '-' +
       this.padDate(date.getMonth() + 1) + '-' +
@@ -68,8 +84,11 @@ export default class Challenge0 extends React.Component {
     return number
   }
   allTeamTotal(data) {
-    let total = 5 // $5 from Lambda Kappa leader page
+    let total = 5 + 1500 // $5 from Lambda Kappa leader page, $1500 tri sigma
     let yTotal = 5
+    if (new Date() > new Date('2017-04-29')) {
+      yTotal += 1500
+    }
     Object.keys(data.teams).forEach(teamKey => {
       const teamTotal = this.currentTotal(data.raised[teamKey])
       const yesterdayTotal = this.yesterdayTotal(data.raised[teamKey])
@@ -82,7 +101,10 @@ export default class Challenge0 extends React.Component {
     let largest = 0
     Object.keys(data.teams).forEach(teamKey => {
       if (teamKey === 'sigmachi') { return }
-      const teamTotal = this.currentTotal(data.raised[teamKey])
+      let teamTotal = this.currentTotal(data.raised[teamKey])
+      if (teamKey === 'sigmasigmasigma') {
+        teamTotal += 1500
+      }
       if (teamTotal > largest) {
         largest = teamTotal
       }

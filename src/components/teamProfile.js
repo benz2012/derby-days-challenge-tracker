@@ -108,6 +108,17 @@ export default class TeamProfile extends React.Component {
     }
     return head + '.' + tail
   }
+  adjustGraphData(raised) {
+    const begin = new Date('2017-04-28')
+    Object.keys(raised).forEach(dateKey => {
+      const date = new Date(dateKey)
+      // console.log(date, ' ? ', begin)
+      if (date >= begin) {
+        // raised[dateKey] += 1500
+      }
+    })
+    return raised
+  }
   chartStyle() {
     return {
       marginBottom: '0px',
@@ -119,10 +130,23 @@ export default class TeamProfile extends React.Component {
     const teamColor = this.colors(name)[0]
     let chartData = []
     let chartLabels = []
-    Object.keys(raisedOverTime).forEach(date => {
-      chartLabels.push(date)
-      chartData.push(raisedOverTime[date])
-    })
+    if (name === 'Sigma Sigma Sigma') {
+      const begin = new Date('2017-04-28')
+      Object.keys(raisedOverTime).forEach(dateKey => {
+        chartLabels.push(dateKey)
+        const date = new Date(dateKey)
+        if (date >= begin) {
+          chartData.push(raisedOverTime[dateKey] + 1500)
+        } else {
+          chartData.push(raisedOverTime[dateKey])
+        }
+      })
+    } else {
+      Object.keys(raisedOverTime).forEach(date => {
+        chartLabels.push(date)
+        chartData.push(raisedOverTime[date])
+      })
+    }
     const yScale = largest < 100 ? 100 : Math.ceil(largest/100)*100
     const step = (yScale/2)
     const teamChart = new Chart(chartContext, {

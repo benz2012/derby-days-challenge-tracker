@@ -11794,6 +11794,19 @@ var TeamProfile = function (_React$Component) {
       return head + '.' + tail;
     }
   }, {
+    key: 'adjustGraphData',
+    value: function adjustGraphData(raised) {
+      var begin = new Date('2017-04-28');
+      Object.keys(raised).forEach(function (dateKey) {
+        var date = new Date(dateKey);
+        // console.log(date, ' ? ', begin)
+        if (date >= begin) {
+          // raised[dateKey] += 1500
+        }
+      });
+      return raised;
+    }
+  }, {
     key: 'chartStyle',
     value: function chartStyle() {
       return {
@@ -11812,10 +11825,23 @@ var TeamProfile = function (_React$Component) {
       var teamColor = this.colors(name)[0];
       var chartData = [];
       var chartLabels = [];
-      Object.keys(raisedOverTime).forEach(function (date) {
-        chartLabels.push(date);
-        chartData.push(raisedOverTime[date]);
-      });
+      if (name === 'Sigma Sigma Sigma') {
+        var begin = new Date('2017-04-28');
+        Object.keys(raisedOverTime).forEach(function (dateKey) {
+          chartLabels.push(dateKey);
+          var date = new Date(dateKey);
+          if (date >= begin) {
+            chartData.push(raisedOverTime[dateKey] + 1500);
+          } else {
+            chartData.push(raisedOverTime[dateKey]);
+          }
+        });
+      } else {
+        Object.keys(raisedOverTime).forEach(function (date) {
+          chartLabels.push(date);
+          chartData.push(raisedOverTime[date]);
+        });
+      }
       var yScale = largest < 100 ? 100 : Math.ceil(largest / 100) * 100;
       var step = yScale / 2;
       var teamChart = new _chart2.default(chartContext, {
@@ -29189,6 +29215,11 @@ var Challenge0 = function (_React$Component) {
         if (team.name === 'Sigma Chi') {
           currentTotal += 5; // $5 from Lambda Kappa leader page
         }
+        if (team.name === 'Sigma Sigma Sigma') {
+          currentTotal += 1500; // $1500 from SSS
+          team.raised = _this2.adjustGraphData(team.raised);
+          // console.log(team.raised)
+        }
         var teamEl = _react2.default.createElement(_teamProfile2.default, { key: team.name, name: team.name,
           number: 0, chapter: team.chapter, raised: currentTotal,
           url: team.team_page_url, charts: _this2.props.charts,
@@ -29225,6 +29256,19 @@ var Challenge0 = function (_React$Component) {
       return yesterdayTotal;
     }
   }, {
+    key: 'adjustGraphData',
+    value: function adjustGraphData(raised) {
+      var begin = new Date('2017-04-28');
+      Object.keys(raised).forEach(function (dateKey) {
+        var date = new Date(dateKey);
+        // console.log(date, ' ? ', begin)
+        if (date >= begin) {
+          // raised[dateKey] += 1500
+        }
+      });
+      return raised;
+    }
+  }, {
     key: 'structureKey',
     value: function structureKey(date) {
       var key = date.getFullYear() + '-' + this.padDate(date.getMonth() + 1) + '-' + this.padDate(date.getDate());
@@ -29243,8 +29287,11 @@ var Challenge0 = function (_React$Component) {
     value: function allTeamTotal(data) {
       var _this3 = this;
 
-      var total = 5; // $5 from Lambda Kappa leader page
+      var total = 5 + 1500; // $5 from Lambda Kappa leader page, $1500 tri sigma
       var yTotal = 5;
+      if (new Date() > new Date('2017-04-29')) {
+        yTotal += 1500;
+      }
       Object.keys(data.teams).forEach(function (teamKey) {
         var teamTotal = _this3.currentTotal(data.raised[teamKey]);
         var yesterdayTotal = _this3.yesterdayTotal(data.raised[teamKey]);
@@ -29264,6 +29311,9 @@ var Challenge0 = function (_React$Component) {
           return;
         }
         var teamTotal = _this4.currentTotal(data.raised[teamKey]);
+        if (teamKey === 'sigmasigmasigma') {
+          teamTotal += 1500;
+        }
         if (teamTotal > largest) {
           largest = teamTotal;
         }

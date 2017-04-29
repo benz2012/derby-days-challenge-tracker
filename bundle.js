@@ -28916,7 +28916,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: 119,
+      clientVersion: 122,
       outdated: false
     };
     return _this;

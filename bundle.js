@@ -29290,9 +29290,6 @@ var Challenge0 = function (_React$Component) {
 
       var total = 5 + 1500; // $5 from Lambda Kappa leader page, $1500 tri sigma
       var yTotal = 5;
-      if (new Date() > new Date('2017-04-29')) {
-        yTotal += 1500;
-      }
       Object.keys(data.teams).forEach(function (teamKey) {
         var teamTotal = _this3.currentTotal(data.raised[teamKey]);
         var yesterdayTotal = _this3.yesterdayTotal(data.raised[teamKey]);

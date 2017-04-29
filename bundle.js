@@ -29087,7 +29087,7 @@ var Challenge = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      if (this.props.number === '1') {
+      if (['1', '2'].indexOf(this.props.number) >= 0) {
         this.setState({ visibleLabel: 'show ▼' });
       }
     }
@@ -29761,6 +29761,15 @@ var Challenge2 = function (_React$Component) {
         _react2.default.createElement(
           'blockquote',
           null,
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'text-danger' },
+              'Challenge Ended'
+            )
+          ),
           _react2.default.createElement(
             'p',
             null,

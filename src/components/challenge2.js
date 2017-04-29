@@ -80,6 +80,7 @@ export default class Challenge2 extends React.Component {
     return(
       <div>
         <blockquote>
+          <p><span className='text-danger'>Challenge Ended</span></p>
           <p>Donation of $5 for creating a <a target="_blank" href="https://www.facebook.com/search/top/?q=%235ForTheFight">#5ForTheFight</a> Facebook post.</p>
           <p>Total Accrued:&nbsp;
             <span className="text-success">

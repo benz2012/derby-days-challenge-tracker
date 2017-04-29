@@ -30,7 +30,7 @@ export default class Challenge extends React.Component {
     }
   }
   componentDidMount() {
-    if (['1', '2'].indexOf(this.props.number) >= 0) {
+    if (['1', '2', '3'].indexOf(this.props.number) >= 0) {
       this.setState({visibleLabel: 'show ▼'})
     }
   }

@@ -28916,7 +28916,7 @@ exports.default = (0, _mobxReact.observer)(function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
     _this.state = {
-      clientVersion: 122,
+      clientVersion: 124,
       outdated: false
     };
     return _this;
@@ -29087,7 +29087,7 @@ var Challenge = function (_React$Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      if (['1', '2'].indexOf(this.props.number) >= 0) {
+      if (['1', '2', '3'].indexOf(this.props.number) >= 0) {
         this.setState({ visibleLabel: 'show ▼' });
       }
     }
@@ -30017,6 +30017,15 @@ var Challenge2 = function (_React$Component) {
         _react2.default.createElement(
           'blockquote',
           null,
+          _react2.default.createElement(
+            'p',
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'text-danger' },
+              'Challenge Ended'
+            )
+          ),
           _react2.default.createElement(
             'p',
             null,

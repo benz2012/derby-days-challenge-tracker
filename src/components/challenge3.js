@@ -121,6 +121,7 @@ export default class Challenge2 extends React.Component {
     return(
       <div>
         <blockquote>
+          <p><span className='text-danger'>Challenge Ended</span></p>
           <p>A Brothers only scavenger hunt: solve clues, raise money.</p>
           <p>Total Accrued:&nbsp;
             <span className="text-success">

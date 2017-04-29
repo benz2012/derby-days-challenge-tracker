@@ -85,7 +85,7 @@ export default class Challenge0 extends React.Component {
   }
   allTeamTotal(data) {
     let total = 5 + 1500 // $5 from Lambda Kappa leader page, $1500 tri sigma
-    let yTotal = 5
+    let yTotal = 5 + 1500
     Object.keys(data.teams).forEach(teamKey => {
       const teamTotal = this.currentTotal(data.raised[teamKey])
       const yesterdayTotal = this.yesterdayTotal(data.raised[teamKey])

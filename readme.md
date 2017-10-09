@@ -1,5 +1,7 @@
 # Derby Days Challenge Tracker
 
+### This project has been depreciated, and it's code and vision have been repurposed. A full re-write of this project can be found in the new project repo: https://github.com/benz2012/derby-dashboard
+
 This is an app for the Sigma Chi Lambda Kappa 2017 Derby Days. It will be used for traking the funds raised for each team based on certain challenges set up by Ben Zenker.
 
 ## Table of Contents
